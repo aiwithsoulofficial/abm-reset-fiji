@@ -661,6 +661,61 @@ h2.sp.in .w > span { transform: none; }
 }
 @media print { .pline, .dock, .badge, .ptr, .ribbon, .tally { display: none !important; } }
 
+
+/* ── phone notes, 19 Nov: readable plates, softened breaks, the seal on the join ── */
+.plate::after { background: linear-gradient(to top, rgba(var(--ink), .97) 0%, rgba(var(--ink), .88) 24%, rgba(var(--ink), .66) 46%, rgba(var(--ink), .3) 64%, rgba(var(--ink), 0) 82%); }
+.plate .kicker { color: var(--ivory); }
+.plate .kicker, .plate h2, .plate .lede { text-shadow: 0 1px 24px rgba(var(--ink), .9), 0 0 3px rgba(var(--ink), .55); }
+.light { box-shadow: inset 0 100px 90px -76px rgba(var(--ink), .34), inset 0 -100px 90px -76px rgba(var(--ink), .34); }
+.to-light::before { background: linear-gradient(to bottom, rgb(var(--ink)) 0%, rgba(var(--ink), 0) 20%, rgba(var(--ink), 0) 70%, rgba(96, 108, 124, .62) 100%), url("media/tx/velvet-ink.webp") center / cover no-repeat; }
+.from-light::before { background: linear-gradient(to bottom, rgba(96, 108, 124, .62) 0%, rgba(var(--ink), 0) 30%, rgba(var(--ink), 0) 80%, rgb(var(--ink)) 100%), url("media/tx/velvet-ink.webp") center / cover no-repeat; }
+.band.to-light::before { opacity: .8; }
+.hinge { --sz: clamp(128px, 15vw, 196px); position: absolute; z-index: 1; left: var(--x, 80%); width: var(--sz); height: var(--sz); margin-left: calc(var(--sz) / -2); pointer-events: none; background: center / contain no-repeat; will-change: rotate; }
+.hinge.bot { bottom: 0; translate: 0 50%; }
+.hinge.top { top: 0; translate: 0 -50%; }
+.hinge.w { background-image: url("media/tx/seal-white.webp"); }
+.hinge.s { background-image: url("media/tx/seal-slate.webp"); }
+.band .hinge { z-index: 3; }
+/* inclusions: what it gives you, then what it is */
+.all li { padding: 16px 0 16px 30px; }
+.all li em { display: block; margin-bottom: 4px; font-family: var(--display); font-style: normal; font-size: clamp(1.3rem, 1.7vw, 1.6rem); line-height: 1.12; color: var(--ivory); }
+.all li::before { top: 1.75em; }
+/* photo and video: the shoot, and what comes home */
+.duo { position: relative; padding-bottom: 16%; }
+.brand .duo .a { display: block; width: 86%; aspect-ratio: 5 / 4; object-fit: cover; object-position: 30% 50%; }
+.brand .duo .b { position: absolute; right: 0; bottom: 0; width: 46%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 58% 30%; border: 7px solid var(--cream); translate: 0 calc(var(--p, 0) * 6px); }
+@media (max-width: 900px) {
+  #facFlick { overflow-y: hidden; transition: height .7s var(--ease); }
+  .hinge { --sz: 136px; }
+}
+
+
+/* take-home: the collection laid out, each piece numbered */
+.lay { margin: clamp(34px, 5vh, 60px) 0 0; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); align-items: stretch; background: var(--ivory); border: 1px solid rgba(96, 108, 124, .22); }
+.lay-img { position: relative; overflow: hidden; }
+.lay-img img { display: block; width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 2; }
+.lay .dot { position: absolute; left: var(--x); top: var(--y); translate: -50% -50%; min-width: 34px; height: 34px; padding: 0 7px; background: var(--ivory); color: var(--slate); border: 1px solid rgba(96, 108, 124, .45); font-family: var(--text); font-size: 11px; letter-spacing: .1em; line-height: 32px; text-align: center; transition: background .5s, color .5s, scale .5s var(--ease); }
+.lay .dot::before { content: ""; position: absolute; inset: -7px; }
+.lay .dot::after { content: ""; position: absolute; inset: -5px; border: 1px solid var(--slate); opacity: 0; scale: .8; transition: opacity .6s, scale .6s var(--ease); }
+.lay .dot.on { background: var(--slate); color: var(--ivory); scale: 1.12; z-index: 2; }
+.lay .dot.on::after { opacity: .55; scale: 1; }
+.lay figcaption { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: clamp(24px, 3.4vw, 54px); min-height: 220px; }
+.lay figcaption b { font-family: var(--display); font-weight: 400; font-size: clamp(3.2rem, 6vw, 6rem); line-height: .8; color: var(--sand); }
+.lay figcaption h3 { font-size: clamp(1.7rem, 2.6vw, 2.5rem); margin-bottom: 8px; }
+.lay figcaption p { max-width: 36ch; }
+.lay figcaption > span { color: var(--slate); font-size: 11px; }
+.lay figcaption.swap b, .lay figcaption.swap div { animation: capin .7s var(--ease) both; }
+.lay .fine { grid-column: 1 / -1; margin: 0; padding: 10px 16px 11px; border-top: 1px solid rgba(96, 108, 124, .2); font-size: 12px; color: var(--slate); }
+.lay + ol { margin-top: clamp(22px, 3vh, 34px); }
+.home li.hot { background: var(--ivory); }
+@media (max-width: 900px) {
+  .lay { grid-template-columns: 1fr; margin-left: calc(var(--pad) * -1 + 10px); margin-right: calc(var(--pad) * -1 + 10px); }
+  .lay .dot { min-width: 30px; height: 30px; line-height: 28px; font-size: 10px; padding: 0 5px; }
+  .lay figcaption { flex-direction: row; align-items: flex-start; gap: 16px; min-height: 168px; padding: 20px 18px 18px; }
+  .lay figcaption b { flex: none; font-size: 3rem; width: 1.3em; }
+  .lay figcaption > span { position: absolute; right: 18px; bottom: 12px; }
+}
+
 </style>
 </head>
 <body>
@@ -917,11 +972,11 @@ h2.sp.in .w > span { transform: none; }
 </section>
 
 <!-- PLATE: boutique -->
-<section class="plate quote" aria-label="A boutique group">
+<section class="plate quote" aria-label="A small group">
   <img src="media/aerial-bay.jpg" srcset="media/m/aerial-bay.jpg 1280w, media/aerial-bay.jpg 2000w" sizes="100vw" decoding="async" alt="The sweep of Natadola Bay from the air, with the resort on its point and the river beyond" loading="lazy">
   <div class="wrap">
-    <div class="kicker caps" data-r><i></i><span>A boutique group</span></div>
-    <h2 data-r style="--d:.05s">With boutique group sizes, the emphasis is on relevant education, practical conversations and meaningful connection with the faculty.</h2>
+    <div class="kicker caps" data-r><i></i><span>A small group</span></div>
+    <h2 data-r style="--d:.05s">With a small group, the emphasis is on relevant education, practical conversations and meaningful connection with the faculty.</h2>
   </div>
 </section>
 
@@ -961,7 +1016,10 @@ h2.sp.in .w > span { transform: none; }
   <div class="orb warm" style="width:42vw;height:42vw;left:-14vw;top:-8vw" aria-hidden="true"></div>
   <div class="orb" style="width:36vw;height:36vw;right:-12vw;bottom:-10vw" aria-hidden="true"></div>
   <div class="wrap grid">
-    <img src="media/pool-hat.jpg" srcset="media/m/pool-hat.jpg 1280w, media/pool-hat.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A guest in a straw hat and sunglasses smiling at the edge of the resort pool with a cocktail" loading="lazy" data-r>
+    <div class="duo" data-r>
+      <img class="a" src="media/shoot-beach.jpg" srcset="media/m/shoot-beach.jpg 1280w, media/shoot-beach.jpg 2000w" sizes="(max-width: 900px) 90vw, 50vw" decoding="async" alt="A videographer filming with a cinema camera at the water's edge on a beach" loading="lazy">
+      <img class="b" src="media/pool-hat.jpg" srcset="media/m/pool-hat.jpg 1280w, media/pool-hat.jpg 2000w" sizes="(max-width: 900px) 46vw, 26vw" decoding="async" alt="A guest in a straw hat and sunglasses smiling at the edge of the resort pool with a cocktail" loading="lazy">
+    </div>
     <div>
       <div class="kicker caps" data-r><i></i><span>Professional photo &amp; video</span></div>
       <h2 data-r style="--d:.05s">Your brand. Beautifully captured.</h2>
@@ -1075,6 +1133,11 @@ h2.sp.in .w > span { transform: none; }
     <div class="kicker caps" data-r><i></i><span>Your RESET take-home collection</span></div>
     <h2 data-r style="--d:.05s">Come for the experience. Leave with the assets.</h2>
     <p class="lede" data-r style="--d:.1s">This is education you can use: practical plans, fresh content and systems you can continue developing back in your business.</p>
+    <figure class="lay" data-r>
+      <div class="lay-img"><img src="media/take-home-flatlay.jpg" srcset="media/m/take-home-flatlay.jpg 1000w, media/take-home-flatlay.jpg 1536w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" loading="lazy" alt="A flat lay on cream linen: photo prints, a scorecard with gauges and charts, an open content calendar, a slate book stamped with the Aesthetic Business Masters seal, a timeline card, a tablet with a rising line, a folded map and an envelope"><button class="dot" type="button" style="--x:43.6%;--y:24%" data-k="0">01</button><button class="dot" type="button" style="--x:76.4%;--y:23%" data-k="1">02</button><button class="dot" type="button" style="--x:16.8%;--y:24%" data-k="2">03</button><button class="dot" type="button" style="--x:15.7%;--y:52%" data-k="3">04</button><button class="dot" type="button" style="--x:45.7%;--y:81%" data-k="4">05</button><button class="dot" type="button" style="--x:80.7%;--y:56%" data-k="5">06</button><button class="dot" type="button" style="--x:47.5%;--y:51%" data-k="6">07</button><button class="dot" type="button" style="--x:75%;--y:85%" data-k="7">08</button></div>
+      <figcaption aria-live="polite"><b></b><div><h3></h3><p></p></div><span class="caps"></span></figcaption>
+      <p class="fine">An illustration of the collection. Yours is created with you during RESET.</p>
+    </figure>
     <ol>
       <li data-r><b>01</b><h3>Know your numbers</h3><p>A clear clinic KPI scorecard covering revenue, profit drivers, utilisation and retention.</p></li>
       <li data-r style="--d:.05s"><b>02</b><h3>Content planner</h3><p>A structured marketing calendar, content pillars and repeatable scheduling workflow.</p></li>
@@ -1186,7 +1249,7 @@ h2.sp.in .w > span { transform: none; }
     <p class="lede" data-r style="--d:.1s">Professional visual content. Specialist education. Private connections. A luxury Fiji escape. RESET brings them into one exceptional experience.</p>
     <div class="tally" aria-hidden="true"><span class="caps">Booked separately, so far</span><b>A$<i id="tallyN">0</i></b></div>
     <ol class="stack">
-      <li data-r data-v="3500"><h3>Two full education days and a focused half-day</h3><b><small>Up to</small>A$3,500</b><p>Some Australian professional conferences and specialist day workshops run from A$695 to A$1,400 a day. RESET gives you two and a half days, with boutique access to a seven-person faculty.</p></li>
+      <li data-r data-v="3500"><h3>Two full education days and a focused half-day</h3><b><small>Up to</small>A$3,500</b><p>Some Australian professional conferences and specialist day workshops run from A$695 to A$1,400 a day. RESET gives you two and a half days, with close access to a seven-person faculty.</p></li>
       <li data-r data-v="3500"><h3>Professional brand photography and video</h3><b><small>Up to</small>A$3,500</b><p>Australian photo-and-video branding packages are advertised from A$1,350 to A$3,500 and higher. Yours are captured at Natadola Bay.</p></li>
       <li data-r data-v="1395"><h3>Specialist marketing and content training</h3><b><small>Up to</small>A$1,395</b><p>Published Australian full-day marketing and AI-content courses run from A$560 to A$1,395. Here you build the system, the content and the plan for your own clinic.</p></li>
       <li class="inc" data-r><h3>Four nights of five-star accommodation</h3><b>Included</b><p>Your own king room at InterContinental Fiji Golf Resort &amp; Spa, with breakfast every morning.</p></li>
@@ -1222,14 +1285,14 @@ h2.sp.in .w > span { transform: none; }
     </div>
 
     <ul class="all" aria-label="All of this is included">
-      <li data-r>Four nights of five-star accommodation with daily breakfast.</li>
-      <li data-r>Three business education sessions: two full days and a focused half-day.</li>
-      <li data-r>Three hosted dinners including Monday welcome, Tuesday mastermind and Wednesday private beachfront celebration, with selected beverages.</li>
-      <li data-r>Three lunches, refreshments, coffee, tea and water during the education program.</li>
-      <li data-r>Professional photo and video assets captured by Alfie and a Fiji-based photographer.</li>
-      <li data-r>Hands-on business tools, a content workflow, marketing plan and 90-day RESET roadmap.</li>
-      <li data-r>Curated gifting, Fijian cultural experiences, breathwork and sound immersion.</li>
-      <li data-r>30-day group accountability catch-up after the retreat.</li>
+      <li data-r><em>Rest that starts the moment you arrive.</em>Four nights in your own five-star room, with breakfast every morning.</li>
+      <li data-r><em>Know your numbers and your next moves.</em>Two full days and a focused half-day of business education.</li>
+      <li data-r><em>Conversations that carry on over dinner.</em>Three hosted dinners: Monday's welcome, Tuesday's mastermind and Wednesday's private beachfront celebration, with selected beverages.</li>
+      <li data-r><em>Nothing to organise while you learn.</em>Three lunches, refreshments, coffee, tea and water through the education program.</li>
+      <li data-r><em>Come home as the face of your brand.</em>Professional photo and video assets, captured by Alfie and a Fiji-based photographer.</li>
+      <li data-r><em>Monday morning already has a plan.</em>Hands-on business tools, a content workflow, a marketing plan and your 90-day RESET roadmap.</li>
+      <li data-r><em>The person behind the business, restored.</em>Curated gifting, Fijian cultural experiences, breathwork and sound immersion.</li>
+      <li data-r><em>Momentum that holds once you are home.</em>A group accountability catch-up 30 days after the retreat.</li>
     </ul>
 
     <p class="until" data-r><b><span id="untilN" data-count="0">0</span></b><span class="caps">days until we meet in Fiji</span></p>
@@ -1400,7 +1463,7 @@ h2.sp.in .w > span { transform: none; }
   });
 
   /* the seal as a slow-turning watermark */
-  [['experience', 's'], ['program', 'w'], ['takehome', 's'], ['fiji', 'w']].forEach(function (p) {
+  [['program', 'w'], ['fiji', 'w']].forEach(function (p) {
     var el = document.getElementById(p[0]); if (!el) return;
     var d = document.createElement('div'); d.className = 'wm ' + p[1]; d.setAttribute('aria-hidden', 'true'); el.insertBefore(d, el.firstChild);
   });
@@ -1431,6 +1494,31 @@ h2.sp.in .w > span { transform: none; }
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   window.addEventListener('resize', onScroll); onScroll();
+
+  /* softened breaks: the seal sits on the join and turns as you scroll, white on the navy, slate on the cream */
+  var hinges = [];
+  function hinge(upper, lower, x) {
+    if (!upper || !lower) return;
+    var ul = upper.classList.contains('light'), ll = lower.classList.contains('light');
+    if (!ul) upper.classList.add('to-light'); if (!ll) lower.classList.add('from-light');
+    [[upper, 'bot', ul], [lower, 'top', ll]].forEach(function (p) {
+      var d = document.createElement('div'); d.className = 'hinge ' + p[1] + (p[2] ? ' s' : ' w'); d.style.setProperty('--x', x); d.setAttribute('aria-hidden', 'true'); p[0].appendChild(d); hinges.push(d);
+    });
+  }
+  function prev(id) { var el = document.getElementById(id); return el ? el.previousElementSibling : null; }
+  hinge(document.getElementById('stays'), document.getElementById('faculty'), '80%');
+  hinge(prev('content'), document.getElementById('content'), '18%');
+  hinge(document.getElementById('content'), document.getElementById('days'), '50%');
+  hinge(prev('takehome'), document.getElementById('takehome'), '80%');
+  hinge(prev('value'), document.getElementById('value'), '80%');
+  var duoB = $('.duo .b');
+  function turn() {
+    var y = window.scrollY, a = (y * .045).toFixed(2) + 'deg';
+    for (var i = 0; i < hinges.length; i++) hinges[i].style.rotate = a;
+    if (duoB && !still) { var r = duoB.parentNode.getBoundingClientRect(); duoB.style.setProperty('--p', ((r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight * -8).toFixed(2)); }
+  }
+  var turning = false;
+  window.addEventListener('scroll', function () { if (!turning) { turning = true; requestAnimationFrame(function () { turning = false; turn(); }); } }, { passive: true }); turn();
 
   /* stories: tap to move, hold to pause, swipe, or let them play */
   function story(el) {
@@ -1536,9 +1624,12 @@ h2.sp.in .w > span { transform: none; }
       b.addEventListener('click', function () { go(ff, x * ff.clientWidth); }); tabs.appendChild(b);
     });
     ff.parentNode.insertBefore(tabs, ff);
+    var fit = function () { var c = ff.children[Math.max(0, lastTab)]; ff.style.height = small.matches && c ? c.offsetHeight + 'px' : ''; };
+    window.addEventListener('resize', fit); window.addEventListener('load', fit);
     var lastTab = -1, ft = function () {
       var k = Math.round(ff.scrollLeft / ff.clientWidth); if (k === lastTab) return; lastTab = k;
       [].forEach.call(ff.children, function (c, x) { c.classList.toggle('cur', x === k); });
+      fit();
       [].forEach.call(tabs.children, function (b, x) { b.classList.toggle('on', x === k); });
       var b = tabs.children[k]; if (b && tabs.scrollWidth > tabs.clientWidth) go(tabs, b.offsetLeft - tabs.clientWidth / 2 + b.clientWidth / 2);
     };
@@ -1567,6 +1658,28 @@ h2.sp.in .w > span { transform: none; }
     var u = function () { var m = r.scrollWidth - r.clientWidth; bar.style.display = m > 4 ? '' : 'none'; fill.style.transform = 'scaleX(' + (m > 4 ? Math.max(.12, r.scrollLeft / m) : 0).toFixed(3) + ')'; };
     r.addEventListener('scroll', function () { requestAnimationFrame(u); }, { passive: true }); window.addEventListener('resize', u); u();
   });
+
+  /* take-home: tap a number on the flat lay to see that piece */
+  var lay = $('.lay'), items = $$('.home ol li');
+  if (lay && items.length) {
+    var dots = $$('.dot', lay), cap = $('figcaption', lay), capNo = $('b', cap), capH = $('h3', cap), capP = $('p', cap), capN = $('span', cap), rail = $('.home ol'), at = -1, tour = null;
+    dots.forEach(function (d, k) { var h = items[k] && $('h3', items[k]); d.setAttribute('aria-label', pad(k + 1) + (h ? ' ' + h.textContent : '')); });
+    var pick = function (k, byHand) {
+      k = (k + dots.length) % dots.length; if (k === at) return; at = k;
+      dots.forEach(function (d, x) { d.classList.toggle('on', x === k); d.setAttribute('aria-pressed', x === k ? 'true' : 'false'); });
+      items.forEach(function (li, x) { li.classList.toggle('hot', x === k); });
+      capNo.textContent = pad(k + 1); capH.textContent = $('h3', items[k]).textContent; capP.textContent = $('p', items[k]).textContent; capN.textContent = pad(k + 1) + ' / ' + pad(dots.length);
+      cap.classList.toggle('swap', false); void cap.offsetWidth; cap.classList.toggle('swap', true);
+      if (byHand && rail.scrollWidth > rail.clientWidth + 4) go(rail, items[k].offsetLeft - rail.offsetLeft - parseFloat(getComputedStyle(rail).paddingLeft || 0));
+    };
+    var halt = function () { clearInterval(tour); tour = null; };
+    dots.forEach(function (d, k) { d.addEventListener('click', function () { halt(); pick(k, true); }); });
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { halt(); if (e.isIntersecting && !still && !lay.dataset.touched) tour = setInterval(function () { pick(at + 1); }, 3200); });
+    }, { threshold: .4 }).observe(lay);
+    lay.addEventListener('pointerdown', function () { lay.dataset.touched = 1; });
+    pick(0);
+  }
 
   /* sound: hear the bowls */
   $$('.listen').forEach(function (b) {
