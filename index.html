@@ -751,6 +751,23 @@ h2.sp.in .w > span { transform: none; }
 @media (max-width: 900px) { .band.to-light .say { padding-bottom: 112px; } }
 @media (min-width: 901px) { .band.to-light .say { padding-bottom: calc(clamp(128px, 15vw, 196px) / 2 + 34px); } }
 
+
+/* the hourglass: a photograph with the sand kept moving */
+.hg { position: relative; width: clamp(138px, 14vw, 196px); aspect-ratio: 704 / 1300; margin-bottom: 2px; }
+.hg img, .hg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hg svg { overflow: visible; }
+.hg .flow { opacity: .55; stroke-dasharray: 4 12; animation: hgFlow .3s linear infinite; }
+.hg .fall circle { animation: hgDrop var(--t, .56s) linear infinite; animation-delay: var(--dl, 0s); }
+.hg .roll circle { animation: hgRoll var(--t, 1.3s) cubic-bezier(.25, .6, .5, 1) infinite; animation-delay: var(--dl, 0s); }
+.hg .sink circle { animation: hgSink var(--t, 3s) ease-in infinite; animation-delay: var(--dl, 0s); }
+.hg .shim { animation: hgShim 9s ease-in-out infinite; }
+@keyframes hgFlow { to { stroke-dashoffset: -16; } }
+@keyframes hgDrop { 0% { transform: translate(0, 0); opacity: 0; } 9% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translate(var(--dx, 0px), 309px); opacity: 0; } }
+@keyframes hgRoll { 0% { transform: translate(0, 0); opacity: 0; } 12% { opacity: 1; } 70% { opacity: .9; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+@keyframes hgSink { 0% { transform: translate(0, 0); opacity: 0; } 18% { opacity: .85; } 80% { opacity: .7; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; } }
+@keyframes hgShim { 0%, 60% { transform: skewX(-16deg) translateX(-120px); opacity: 0; } 66% { opacity: 1; } 92% { opacity: 1; } 100% { transform: skewX(-16deg) translateX(900px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .hg .flow, .hg .fall circle, .hg .roll circle, .hg .sink circle, .hg .shim { animation: none; opacity: 0; } }
+
 </style>
 </head>
 <body>
@@ -1331,37 +1348,20 @@ h2.sp.in .w > span { transform: none; }
     </ul>
 
     <div class="until" data-r role="timer" aria-label="Time until RESET begins in Fiji on 29 August 2027">
-      <svg class="glass" viewBox="0 0 120 190" aria-hidden="true">
-        <defs>
-          <linearGradient id="hgBrass" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#6f6850"/><stop offset=".18" stop-color="#b3a987"/><stop offset=".5" stop-color="#f6efd9"/><stop offset=".82" stop-color="#b3a987"/><stop offset="1" stop-color="#6f6850"/></linearGradient>
-          <linearGradient id="hgBand" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3d3a2c" stop-opacity=".55"/><stop offset=".5" stop-color="#3d3a2c" stop-opacity="0"/><stop offset="1" stop-color="#3d3a2c" stop-opacity=".55"/></linearGradient>
-          <linearGradient id="hgPost" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#5f5942"/><stop offset=".5" stop-color="#f3ecd6"/><stop offset="1" stop-color="#5f5942"/></linearGradient>
-          <linearGradient id="hgGlass" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#b7c2c8" stop-opacity=".34"/><stop offset=".22" stop-color="#fffbf3" stop-opacity=".1"/><stop offset=".5" stop-color="#fffbf3" stop-opacity=".03"/><stop offset=".78" stop-color="#fffbf3" stop-opacity=".1"/><stop offset="1" stop-color="#b7c2c8" stop-opacity=".34"/></linearGradient>
-          <linearGradient id="hgSand" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#a99d7b"/><stop offset=".45" stop-color="#eee5cb"/><stop offset=".6" stop-color="#e3d9bd"/><stop offset="1" stop-color="#a2966f"/></linearGradient>
-          <linearGradient id="hgShine" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-          <linearGradient id="hgShineUp" x1="0" x2="0" y1="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-          <filter id="hgGrain" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="1.7" numOctaves="2" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .36  0 0 0 0 .32  0 0 0 0 .22  0 0 0 -1.5 .78" result="k"/><feComposite in="k" in2="SourceGraphic" operator="in" result="g"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="g"/></feMerge></filter>
-          <filter id="hgSoft" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="3.2"/></filter>
-          <clipPath id="hgTop"><path d="M33,22.5 H87 C87,52 65.5,74 62.4,88 L60,92 L57.6,88 C54.5,74 33,52 33,22.5 Z"/></clipPath>
-          <clipPath id="hgBot"><path d="M60,92 L62.4,96 C65.5,110 87,132 87,161.5 H33 C33,132 54.5,110 57.6,96 Z"/></clipPath>
-        </defs>
-        <ellipse class="hg-shadow" cx="60" cy="181" rx="47" ry="4.6" fill="#05080d" opacity=".55" filter="url(#hgSoft)"/>
-        <g class="hg-flip">
-          <rect x="19" y="20" width="5" height="144" fill="url(#hgPost)"/><rect x="96" y="20" width="5" height="144" fill="url(#hgPost)"/>
-          <rect x="17.6" y="86" width="7.8" height="12" rx="1.2" fill="url(#hgPost)"/><rect x="94.6" y="86" width="7.8" height="12" rx="1.2" fill="url(#hgPost)"/>
-          <g clip-path="url(#hgTop)" filter="url(#hgGrain)"><path class="hg-sand-top" d="M20,10 L60,20 L100,10 V200 H20 Z" fill="url(#hgSand)"/></g>
-          <line class="hg-fall" x1="60" y1="90" x2="60" y2="162" stroke="#e6dcc0" stroke-width="1.5" stroke-linecap="round"/>
-          <g clip-path="url(#hgBot)" filter="url(#hgGrain)"><path class="hg-sand-bot" d="M20,176 Q60,152 100,176 V280 H20 Z" fill="url(#hgSand)"/></g>
-          <path d="M32,22 H88 C88,52 66,74 63,88 V96 C66,110 88,132 88,162 H32 C32,132 54,110 57,96 V88 C54,74 32,52 32,22 Z" fill="url(#hgGlass)" stroke="#fffbf3" stroke-opacity=".62" stroke-width="1.1"/>
-          <path d="M37.5,27 C38,47 49,65 55.5,80" fill="none" stroke="url(#hgShine)" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M82.5,157 C82,137 71,119 64.5,104" fill="none" stroke="url(#hgShineUp)" stroke-width="2.4" stroke-linecap="round"/>
-          <ellipse cx="43" cy="31" rx="1.6" ry="3.4" fill="#fff" opacity=".6" transform="rotate(-18 43 31)"/><ellipse cx="77" cy="153" rx="1.6" ry="3.4" fill="#fff" opacity=".6" transform="rotate(-18 77 153)"/>
-          <rect x="14" y="8" width="92" height="9" rx="1.4" fill="url(#hgBrass)"/><rect x="14" y="8" width="92" height="9" rx="1.4" fill="url(#hgBand)"/>
-          <rect x="25" y="17" width="70" height="5.4" fill="url(#hgBrass)"/><rect x="25" y="17" width="70" height="5.4" fill="url(#hgBand)"/>
-          <rect x="25" y="161.6" width="70" height="5.4" fill="url(#hgBrass)"/><rect x="25" y="161.6" width="70" height="5.4" fill="url(#hgBand)"/>
-          <rect x="14" y="167" width="92" height="9" rx="1.4" fill="url(#hgBrass)"/><rect x="14" y="167" width="92" height="9" rx="1.4" fill="url(#hgBand)"/>
-        </g>
-      </svg>
+      <div class="hg" aria-hidden="true">
+        <img src="media/hourglass.webp" alt="" width="450" height="830" loading="lazy" decoding="async">
+        <svg viewBox="0 0 704 1300">
+          <defs>
+            <linearGradient id="hgShimG" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <clipPath id="hgBulbs"><ellipse cx="348" cy="353" rx="192" ry="222"/><ellipse cx="348" cy="835" rx="196" ry="240"/></clipPath>
+          </defs>
+          <g clip-path="url(#hgBulbs)"><rect class="shim" x="-140" y="60" width="120" height="1100" fill="url(#hgShimG)" transform="skewX(-16)"/></g>
+          <line class="flow" x1="346" y1="638" x2="346" y2="943" stroke="#fff6dd" stroke-width="2.2" stroke-linecap="round"/>
+          <g class="fall" fill="#f3e9cd"><circle cx="345.8" cy="632" r="2.0" style="--dl:-0.55s;--t:0.57s;--dx:0.0px"/><circle cx="346.3" cy="632" r="1.7" style="--dl:-0.31s;--t:0.59s;--dx:1.5px"/><circle cx="344.7" cy="632" r="1.8" style="--dl:-0.05s;--t:0.61s;--dx:1.0px"/><circle cx="344.5" cy="632" r="2.4" style="--dl:-0.58s;--t:0.59s;--dx:0.6px"/><circle cx="344.9" cy="632" r="1.5" style="--dl:-0.32s;--t:0.51s;--dx:-1.5px"/><circle cx="345.2" cy="632" r="1.5" style="--dl:-0.28s;--t:0.56s;--dx:1.7px"/><circle cx="346.1" cy="632" r="2.1" style="--dl:-0.30s;--t:0.59s;--dx:-0.2px"/><circle cx="345.3" cy="632" r="2.4" style="--dl:-0.60s;--t:0.62s;--dx:1.0px"/><circle cx="345.4" cy="632" r="1.7" style="--dl:-0.17s;--t:0.51s;--dx:1.3px"/><circle cx="345.7" cy="632" r="2.3" style="--dl:-0.23s;--t:0.63s;--dx:1.7px"/><circle cx="344.4" cy="632" r="1.7" style="--dl:-0.55s;--t:0.57s;--dx:2.4px"/><circle cx="345.7" cy="632" r="1.6" style="--dl:-0.38s;--t:0.61s;--dx:-1.2px"/><circle cx="344.7" cy="632" r="1.8" style="--dl:-0.58s;--t:0.61s;--dx:-1.9px"/><circle cx="345.2" cy="632" r="1.6" style="--dl:-0.04s;--t:0.61s;--dx:-1.6px"/><circle cx="346.2" cy="632" r="1.9" style="--dl:-0.11s;--t:0.60s;--dx:-1.8px"/><circle cx="346.5" cy="632" r="1.6" style="--dl:-0.25s;--t:0.53s;--dx:-1.2px"/><circle cx="347.5" cy="632" r="2.2" style="--dl:-0.18s;--t:0.62s;--dx:-1.4px"/><circle cx="345.7" cy="632" r="2.3" style="--dl:-0.39s;--t:0.51s;--dx:2.4px"/></g>
+          <g class="roll" fill="#eadfc2"><circle cx="347.9" cy="949" r="1.5" style="--dl:-1.24s;--t:1.23s;--dx:45.4px;--dy:22.3px"/><circle cx="344.6" cy="949" r="1.8" style="--dl:-0.39s;--t:1.42s;--dx:-49.3px;--dy:34.5px"/><circle cx="350.8" cy="949" r="1.7" style="--dl:-0.92s;--t:1.61s;--dx:39.5px;--dy:24.9px"/><circle cx="341.4" cy="949" r="2.0" style="--dl:-0.40s;--t:1.13s;--dx:-68.5px;--dy:50.1px"/><circle cx="347.8" cy="949" r="2.1" style="--dl:-1.41s;--t:1.42s;--dx:51.9px;--dy:23.3px"/><circle cx="344.8" cy="949" r="2.1" style="--dl:-0.38s;--t:1.49s;--dx:-43.4px;--dy:46.4px"/><circle cx="349.4" cy="949" r="1.5" style="--dl:-0.28s;--t:1.50s;--dx:33.6px;--dy:27.3px"/><circle cx="342.8" cy="949" r="2.0" style="--dl:-0.98s;--t:1.20s;--dx:-77.7px;--dy:26.5px"/><circle cx="347.1" cy="949" r="1.5" style="--dl:-0.71s;--t:1.04s;--dx:39.2px;--dy:31.8px"/><circle cx="342.7" cy="949" r="1.4" style="--dl:-0.58s;--t:1.62s;--dx:-81.0px;--dy:41.0px"/><circle cx="349.8" cy="949" r="1.8" style="--dl:-0.22s;--t:1.02s;--dx:30.9px;--dy:49.1px"/><circle cx="342.2" cy="949" r="2.1" style="--dl:-0.03s;--t:1.45s;--dx:-55.1px;--dy:43.4px"/></g>
+          <g class="sink" fill="#f5ecd2"><circle cx="441.1" cy="351.0" r="1.4" style="--dl:-1.75s;--t:3.34s;--dx:-78.0px;--dy:39.5px"/><circle cx="187.0" cy="341.2" r="1.8" style="--dl:-2.54s;--t:3.52s;--dx:130.4px;--dy:45.9px"/><circle cx="444.7" cy="348.0" r="1.9" style="--dl:-2.79s;--t:3.02s;--dx:-80.9px;--dy:39.9px"/><circle cx="199.0" cy="343.7" r="1.7" style="--dl:-2.00s;--t:2.98s;--dx:120.5px;--dy:44.7px"/><circle cx="470.1" cy="344.4" r="1.4" style="--dl:-2.05s;--t:3.59s;--dx:-101.8px;--dy:42.4px"/><circle cx="189.2" cy="341.4" r="1.6" style="--dl:-2.35s;--t:3.18s;--dx:128.6px;--dy:45.7px"/><circle cx="454.5" cy="348.1" r="1.5" style="--dl:-2.40s;--t:2.63s;--dx:-88.9px;--dy:40.8px"/><circle cx="219.9" cy="343.1" r="1.5" style="--dl:-2.23s;--t:3.10s;--dx:103.4px;--dy:42.6px"/></g>
+        </svg>
+      </div>
       <div class="clock">
         <div><b id="cdD">0</b><span class="caps">days</span></div><i aria-hidden="true">:</i>
         <div><b id="cdH">00</b><span class="caps">hours</span></div><i aria-hidden="true">:</i>
