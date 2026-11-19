@@ -1112,10 +1112,6 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     });
   }
   if (!still) { window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(drift); } }, { passive: true }); drift(); }
-  document.querySelectorAll('.exp figure img, .days figure img, .incl > img, .brand .grid > img').forEach(function (im) {
-    im.classList.add('wipe');
-    new IntersectionObserver(function (es, o) { es.forEach(function (e) { if (e.isIntersecting) { im.classList.add('in'); o.disconnect(); } }); }, { threshold: .2 }).observe(im);
-  });
   document.querySelectorAll('.reel .flick').forEach(function (f) {
     var auto = !still, seen = false, timer = null;
     function cur() { var n = Math.round(f.scrollLeft / f.clientWidth); [].forEach.call(f.children, function (c, k) { c.classList.toggle('cur', k === n); }); }
