@@ -391,7 +391,6 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   .fac .head, .table .head { align-items: flex-start; flex-direction: column; }
   .sum { grid-template-columns: 1fr; } .sum .now { border-left: 0; padding-left: 0; border-top: 1px solid rgba(255, 251, 243, .25); padding-top: 26px; }
   .value .stack li { grid-template-columns: 1fr; } .value .stack li b { grid-row: auto; grid-column: 1; text-align: left; justify-self: start; margin: 4px 0 6px; }
-  .cine .frame { aspect-ratio: 4 / 5; }
   .sum .now .btn { display: block; text-align: center; white-space: nowrap; font-size: 12px; letter-spacing: .16em; padding: 19px 10px; }
   .band, .band.flip { grid-template-columns: 1fr; min-height: 0; }
   .band .pic, .band.flip .pic { grid-column: 1; grid-row: 1; aspect-ratio: 4 / 3; }
@@ -431,6 +430,237 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   .plate > img, .band .pic img { scale: 1.07; translate: none; transition: none; } .reel .flick figure img, img.wipe { transform: none; transition: none; clip-path: none; } .seq figure.on img { animation: none; }
 }
 @media print { .grain, .veil, .orb, .ghost, .nav, .hold, .ctrl { display: none !important; } }
+
+/* ═════════════ V4: texture, brand, movement, touch ═════════════ */
+:root { --bg: rgb(var(--ink)); }
+.light { --bg: var(--cream); }
+section { overflow: clip; }
+
+/* ── texture: velvet folds in the dark, blooms and the seal in the light ── */
+.stays::before, .prog::before, .days::before, .table::before, .feel::before, .band::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgb(var(--ink)) 0%, rgba(var(--ink), 0) 20%, rgba(var(--ink), 0) 80%, rgb(var(--ink)) 100%),
+    url("media/tx/velvet-ink.webp") center / cover no-repeat;
+  opacity: .85;
+}
+.band::before { opacity: .6; }
+.exp::before, .fac::before, .brand::before, .home::before, .value::before {
+  content: ""; position: absolute; z-index: 0; pointer-events: none; width: min(560px, 74vw); aspect-ratio: 760 / 726;
+  background: url("media/tx/bloom-sand.webp") center / contain no-repeat; opacity: .46;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 62% 56%, #000 38%, transparent 100%); mask-image: radial-gradient(ellipse 60% 60% at 62% 56%, #000 38%, transparent 100%);
+}
+.exp::before { right: -9%; bottom: -5%; }
+.fac::before { left: -10%; top: -4%; transform: scaleX(-1); }
+.brand::before { right: -10%; top: -9%; transform: rotate(8deg); }
+.home::before { left: -9%; bottom: -6%; transform: scaleX(-1) rotate(-6deg); }
+.value::before { right: -12%; top: 26%; }
+.fac::after, .value::after {
+  content: ""; position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; width: min(380px, 46vw); pointer-events: none;
+  background: url("media/tx/drape-sky.webp") center / cover no-repeat; opacity: .32;
+  -webkit-mask-image: linear-gradient(to left, #000, transparent); mask-image: linear-gradient(to left, #000, transparent);
+}
+.value::after { right: auto; left: 0; transform: scaleX(-1); }
+.wm { position: absolute; z-index: 0; width: min(125vw, 900px); aspect-ratio: 1; background: center / contain no-repeat; pointer-events: none; will-change: transform; }
+.wm.s { background-image: url("media/tx/seal-slate.webp"); opacity: .075; right: max(-40vw, -400px); top: 3%; }
+.wm.w { background-image: url("media/tx/seal-white.webp"); opacity: .05; left: max(-42vw, -420px); bottom: -6%; }
+.orb { animation: breathe 14s ease-in-out infinite alternate, floaty 33s ease-in-out infinite alternate; }
+.orb.warm { animation-duration: 19s, 41s; }
+@keyframes floaty { from { translate: 0 0; } to { translate: 7vw -5vh; } }
+
+/* ── frames: a second hairline inside the panels that matter ── */
+.stay, .prof, .gate, .sum { position: relative; }
+.stay::after, .prof::after, .gate::after, .sum::after, .reel .story::after {
+  content: ""; position: absolute; inset: 9px; z-index: 4; border: 1px solid rgba(213, 204, 178, .3); pointer-events: none;
+}
+.prof::after { border-color: rgba(96, 108, 124, .2); }
+.plate::before { content: ""; position: absolute; inset: clamp(9px, 1.3vw, 18px); z-index: 2; border: 1px solid rgba(213, 204, 178, .26); pointer-events: none; }
+.plate .wrap { padding-bottom: clamp(56px, 9vh, 104px); }
+
+/* ── chapter numbers, lines that draw ── */
+.kicker b.no { font-family: var(--display); font-weight: 400; font-size: 1.55rem; line-height: 1; letter-spacing: .02em; color: var(--sand); }
+.light .kicker b.no { color: var(--slate); }
+.js .kicker[data-r] i { transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.2s var(--ease) .25s; }
+.js .kicker[data-r].in i { transform: none; }
+
+/* ── headings rise word by word ── */
+h2.sp[data-r] { opacity: 1; transform: none; }
+h2.sp .w { display: inline-block; overflow: hidden; vertical-align: top; padding: .1em 0 .16em; margin: -.1em 0 -.16em; }
+h2.sp .w > span { display: inline-block; transform: translateY(118%); transition: transform 1.2s var(--ease); transition-delay: calc(var(--d, 0s) + var(--i) * 60ms); }
+h2.sp.in .w > span { transform: none; }
+
+/* ── photographs open like a curtain (the image itself is never clipped) ── */
+.shot { display: block; position: relative; overflow: hidden; }
+.shot > img { transform: scale(1.16); transition: transform 2.6s var(--ease); }
+.shot.in > img { transform: none; }
+.shot::after { content: ""; position: absolute; inset: -1px; z-index: 2; background: var(--bg); transform-origin: 50% 100%; transition: transform 1.3s cubic-bezier(.77, 0, .18, 1); }
+.shot.in::after { transform: scaleY(0); }
+
+/* ── ribbons ── */
+.ribbon { position: relative; z-index: 2; overflow: hidden; padding: clamp(16px, 2.6vh, 28px) 0; background: rgb(var(--ink)); border-top: 1px solid rgba(213, 204, 178, .16); border-bottom: 1px solid rgba(213, 204, 178, .16); }
+.ribbon .track { display: flex; align-items: center; width: max-content; animation: slide 52s linear infinite; }
+.ribbon.rev .track { animation-direction: reverse; }
+.ribbon span { font-family: var(--display); font-size: clamp(1.9rem, 4.6vw, 4.2rem); line-height: 1; letter-spacing: .09em; text-transform: uppercase; white-space: nowrap; padding: 0 clamp(16px, 2.2vw, 38px); color: var(--ivory); }
+.ribbon span:nth-of-type(even) { color: transparent; -webkit-text-stroke: 1px rgba(213, 204, 178, .75); }
+.ribbon i { flex: none; width: 7px; height: 7px; background: var(--sand); transform: rotate(45deg); }
+@keyframes slide { to { transform: translate3d(-50%, 0, 0); } }
+
+/* ── buttons: a slow sheen, a press ── */
+.btn { position: relative; overflow: hidden; }
+.btn::after { content: ""; position: absolute; top: 0; bottom: 0; left: -70%; width: 45%; background: linear-gradient(100deg, transparent, rgba(213, 204, 178, .6), transparent); transform: skewX(-18deg); pointer-events: none; }
+.btn:hover::after, .band.live .btn::after, .sum.struck .btn::after { left: 130%; transition: left 1.3s var(--ease) .5s; }
+.btn:active { scale: .97; }
+
+/* ── progress line, phone dock, desktop badge, cursor ── */
+.pline { position: fixed; z-index: 85; top: 0; left: 0; right: 0; height: 2px; pointer-events: none; }
+.pline i { display: block; height: 100%; background: var(--sand); transform-origin: 0 50%; transform: scaleX(0); }
+.dock, .badge, .ptr { display: none; }
+@media (max-width: 900px) {
+  .dock { position: fixed; z-index: 78; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 7px 7px 7px 16px;
+    background: rgba(var(--ink), .88); -webkit-backdrop-filter: blur(16px) saturate(1.1); backdrop-filter: blur(16px) saturate(1.1); border: 1px solid rgba(213, 204, 178, .3); transform: translateY(160%); transition: transform .8s var(--ease); }
+  .dock.on { transform: none; }
+  .nav.open ~ .dock { transform: translateY(160%); }
+  .dock .ch { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+  .dock .ch b { font-family: var(--display); font-weight: 400; font-size: 1.5rem; line-height: 1; color: var(--sand); }
+  .dock .ch span { font-size: 11px; letter-spacing: .2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--cream); }
+  .dock.tick .ch { animation: tick .7s var(--ease); }
+  .dock .btn { flex: none; padding: 13px 20px; font-size: 11px; letter-spacing: .22em; }
+  footer { padding-bottom: 104px; }
+}
+@keyframes tick { from { opacity: 0; transform: translateY(9px); } }
+@media (min-width: 901px) {
+  .badge { position: fixed; z-index: 78; right: 26px; bottom: 26px; width: 128px; height: 128px; display: grid; place-items: center; border-radius: 50%; background: var(--ivory); outline: 1px solid rgba(96, 108, 124, .35); outline-offset: -6px;
+    transform: scale(.5) rotate(-40deg); opacity: 0; pointer-events: none; transition: transform 1s var(--ease), opacity .6s; }
+  .badge.on { transform: none; opacity: 1; pointer-events: auto; }
+  .badge svg { position: absolute; inset: 0; animation: turn 24s linear infinite; }
+  .badge text { font-family: var(--text); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; fill: var(--slate); }
+  .badge img { width: 46px; }
+  .badge:hover svg { animation-duration: 7s; }
+}
+@keyframes turn { to { transform: rotate(360deg); } }
+.has-cur .ptr { display: block; opacity: 0; transition: opacity .5s; position: fixed; z-index: 95; left: 0; top: 0; width: 0; height: 0; pointer-events: none; mix-blend-mode: difference; }
+.has-cur .ptr.live { opacity: 1; }
+.ptr i { position: absolute; left: -18px; top: -18px; width: 36px; height: 36px; border: 1px solid #fff; border-radius: 50%; transition: transform .5s var(--ease), background .5s; }
+.ptr.big i { transform: scale(1.9); background: rgba(255, 255, 255, .14); }
+.ptr::after { content: attr(data-l); position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); font: 10px var(--text); letter-spacing: .2em; text-transform: uppercase; color: #fff; white-space: nowrap; }
+
+/* ── stories: photographs you tap through ── */
+.reel .story { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 84vh; background: #0d121b; overflow: hidden; touch-action: pan-y; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; cursor: pointer; outline-offset: 6px; }
+.reel .story figure { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1.5s var(--ease); }
+.reel .story figure.on { opacity: 1; z-index: 1; }
+.reel .story figure img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.03); pointer-events: none; -webkit-user-drag: none; }
+.reel .story figure.on img { animation: kb 9s linear forwards; }
+.reel .story figure:nth-of-type(even).on img { animation-name: kb2; }
+.reel .story figure:nth-of-type(3n).on img { animation-name: kb3; }
+.reel .story.held figure.on img { animation-play-state: paused; }
+.reel .story figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 110px clamp(22px, 3.2vw, 44px) clamp(26px, 3vw, 40px); background: linear-gradient(to top, rgba(var(--ink), .9), rgba(var(--ink), .5) 45%, transparent); font-family: var(--display); font-size: clamp(1.6rem, 2.8vw, 2.9rem); line-height: 1.04; letter-spacing: 0; text-transform: none; color: var(--ivory); }
+.reel .story figcaption small { display: block; margin-bottom: 9px; font-family: var(--text); font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--sand); }
+.reel .story figure.on figcaption { animation: capin 1.4s var(--ease) .25s both; }
+@keyframes capin { from { opacity: 0; transform: translateY(16px); } }
+.story .bars { position: absolute; left: clamp(22px, 3.2vw, 44px); right: clamp(22px, 3.2vw, 44px); top: 24px; z-index: 5; display: flex; gap: 5px; }
+.story .bars i { flex: 1; height: 2px; background: rgba(255, 251, 243, .3); overflow: hidden; }
+.story .bars b { display: block; height: 100%; background: var(--ivory); transform-origin: 0 50%; transform: scaleX(0); }
+.story .hint { position: absolute; right: clamp(22px, 3.2vw, 44px); top: 40px; z-index: 5; font-size: 10px; letter-spacing: .2em; color: rgba(255, 251, 243, .78); transition: opacity .8s; }
+.story.used .hint { opacity: 0; }
+.story.held::before { content: "Paused"; position: absolute; left: 50%; top: 50%; z-index: 6; transform: translate(-50%, -50%); padding: 10px 16px; background: rgba(var(--ink), .7); font: 11px var(--text); letter-spacing: .26em; text-transform: uppercase; color: var(--ivory); }
+.sctrl span { min-width: 5.4em; }
+
+/* ── the film gate ── */
+.gate .tc { position: absolute; left: 24px; bottom: 22px; z-index: 5; font-style: normal; font-size: 10px; letter-spacing: .26em; color: rgba(255, 251, 243, .8); }
+
+/* ── stays: a two-way switch ── */
+.stay img, .port > img { transition: transform 7s cubic-bezier(.2, .6, .2, 1); transform: scale(1.07); }
+.stay.cur img, .prof.cur .port > img { transform: none; }
+.seg { position: relative; display: grid; grid-template-columns: 1fr 1fr; max-width: 620px; margin-bottom: 16px; border: 1px solid rgba(213, 204, 178, .32); }
+.seg button { position: relative; z-index: 1; padding: 15px 10px 13px; font-family: var(--text); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--cream); transition: color .6s; }
+.seg button b { display: block; margin-top: 5px; font-family: var(--display); font-weight: 400; font-size: 1.7rem; line-height: 1; letter-spacing: 0; }
+.seg button[aria-pressed="true"] { color: var(--slate); }
+.seg > i { position: absolute; z-index: 0; top: 0; bottom: 0; left: 0; width: 50%; background: var(--ivory); transform: translateX(calc(var(--k, 0) * 100%)); transition: transform .8s var(--ease); }
+
+/* ── faculty: names you can tap ── */
+.ftabs { display: flex; overflow-x: auto; scrollbar-width: none; margin-bottom: 16px; border-bottom: 1px solid rgba(96, 108, 124, .28); }
+.ftabs::-webkit-scrollbar { display: none; }
+.ftabs button { flex: none; padding: 13px 17px 14px; margin-bottom: -1px; font-family: var(--text); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--slate); opacity: .55; border-bottom: 2px solid transparent; transition: opacity .5s, border-color .5s; }
+.ftabs button.on { opacity: 1; border-color: var(--slate); }
+
+/* ── five days: dates that follow you ── */
+.daynav { position: relative; z-index: 6; display: flex; margin-top: clamp(30px, 5vh, 52px); border: 1px solid rgba(213, 204, 178, .24); background: rgba(var(--ink), .5); }
+.daynav button { flex: 1; padding: 12px 2px 11px; font-family: var(--text); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--mist); border-left: 1px solid rgba(213, 204, 178, .24); transition: background .6s, color .6s; }
+.daynav button:first-child { border-left: 0; }
+.daynav button b { display: block; font-family: var(--display); font-weight: 400; font-size: 1.8rem; line-height: 1; letter-spacing: 0; color: var(--sand); transition: color .6s; }
+.daynav button.on { background: var(--ivory); color: var(--slate); }
+.daynav button.on b { color: var(--slate); }
+.days .daynav + .grid { margin-top: 28px !important; }
+.day { position: relative; }
+.js .day::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--sand); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.3s var(--ease); }
+.js .day.now::before { transform: none; }
+.day .date b { transition: color .8s; }
+.day.now .date b { color: var(--ivory); }
+
+/* ── value: the tally, the strike, the price ── */
+.tally { position: sticky; top: 86px; z-index: 6; display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin-top: clamp(30px, 5vh, 54px); padding: 15px 20px 13px; background: var(--slate); color: var(--ivory); transition: opacity .7s, transform .7s var(--ease); }
+.tally span { font-size: 11px; color: var(--sand); }
+.tally b { font-family: var(--display); font-weight: 400; font-size: clamp(1.7rem, 2.5vw, 2.3rem); line-height: 1; white-space: nowrap; }
+.tally i { font-style: normal; font-variant-numeric: tabular-nums; }
+.tally.done { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+.value .tally + .stack { margin-top: 0; border-top: 0; }
+.js .value .stack li[data-v] b { transition: color 1s, scale 1s var(--ease); transform-origin: 100% 50%; }
+.js .value .stack li[data-v]:not(.on) b { color: rgba(96, 108, 124, .32); }
+.js .sum .was b { position: relative; display: inline-block; text-decoration: none; }
+.js .sum .was b::after { content: ""; position: absolute; left: -3%; right: -3%; top: 52%; height: 2px; background: var(--sand); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.2s cubic-bezier(.77, 0, .18, 1) .5s; }
+.js .sum.struck .was b::after { transform: none; }
+.js .sum .now b { opacity: 0; transform: translateY(22px); transition: opacity 1.1s 1.4s, transform 1.3s var(--ease) 1.4s; }
+.js .sum.struck .now b { opacity: 1; transform: none; }
+
+/* ── sound: hear the bowls ── */
+.listen { display: flex; align-items: center; gap: 14px; margin-top: 14px; font-size: 11px; letter-spacing: .22em; color: var(--sand); text-align: left; }
+.listen i { position: relative; flex: none; width: 54px; height: 54px; border: 1px solid rgba(213, 204, 178, .65); border-radius: 50%; overflow: hidden; transition: width .8s var(--ease), height .8s var(--ease); }
+.listen i::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-32%, -50%); border-left: 11px solid var(--sand); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.listen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.listen.playing i { width: 104px; height: 104px; }
+.listen.playing i::after { display: none; }
+
+/* ── apply: the seal with its ring, the days until Fiji ── */
+.sealring { position: relative; width: clamp(168px, 20vw, 236px); aspect-ratio: 1; margin: 0 auto 28px; display: grid; place-items: center; }
+.sealring .seal { width: 64%; margin: 0; }
+.sealring svg { position: absolute; inset: 0; animation: turn 70s linear infinite; }
+.sealring text { font-family: var(--text); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; fill: var(--sand); }
+.until { margin-top: clamp(34px, 5vh, 56px); }
+.until b { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(3.6rem, 8.4vw, 7.4rem); line-height: .88; color: var(--ivory); font-variant-numeric: tabular-nums; }
+.until > span { display: block; margin-top: 8px; color: var(--sand); }
+.enq .until + .go { margin-top: clamp(26px, 4vh, 40px); }
+
+/* ── phone: sessions and take-home become cards you swipe ── */
+.railbar { display: none; height: 1px; margin-top: 20px; background: rgba(213, 204, 178, .24); }
+.railbar i { display: block; height: 100%; background: var(--sand); transform-origin: 0 50%; transform: scaleX(.12); }
+.light .railbar { background: rgba(96, 108, 124, .26); } .light .railbar i { background: var(--slate); }
+@media (max-width: 900px) {
+  .reel .story { aspect-ratio: 4 / 5; max-height: none; }
+  .story .hint { top: auto; bottom: 12px; right: 50%; transform: translateX(50%); white-space: nowrap; }
+  .reel .story figcaption { padding-bottom: 44px; }
+  .tally { top: 12px; margin-left: calc(var(--pad) * -1 + 10px); margin-right: calc(var(--pad) * -1 + 10px); }
+  .daynav { position: sticky; top: 0; margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); border-left: 0; border-right: 0; background: rgba(var(--ink), .92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+  .seg { max-width: none; }
+  .wm.s { top: 1%; } .wm { opacity: .06; }
+  .exp::before, .fac::before, .brand::before, .home::before, .value::before { width: 78vw; opacity: .36; }
+  .brand::before { right: -30%; top: -5%; } .value::before { right: -34%; top: 34%; } .fac::before { left: -32%; top: -3%; } .exp::before { right: -30%; } .home::before { left: -30%; }
+}
+@media (max-width: 760px) {
+  .sessions, .home ol { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; gap: 12px; margin-left: calc(var(--pad) * -1); margin-right: calc(var(--pad) * -1); padding: 0 var(--pad); scroll-padding: 0 var(--pad); border: 0; }
+  .sessions::-webkit-scrollbar, .home ol::-webkit-scrollbar { display: none; }
+  .sessions li, .home li { flex: 0 0 78%; display: block; scroll-snap-align: start; min-height: 208px; padding: 24px 22px 26px; border: 1px solid rgba(213, 204, 178, .26); background: rgba(var(--ink), .46); }
+  .home li { border-color: rgba(96, 108, 124, .28); background: var(--ivory); }
+  .sessions b, .home b { display: block; margin-bottom: 20px; }
+  .railbar { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ribbon .track, .badge svg, .sealring svg, .orb { animation: none; }
+  h2.sp .w > span, .shot > img { transform: none; transition: none; } .shot::after { display: none; }
+  .js .sum .now b { opacity: 1; transform: none; } .js .kicker[data-r] i { transform: none; }
+  .reel .story figure.on img, .reel .story figure.on figcaption { animation: none; }
+}
+@media print { .pline, .dock, .badge, .ptr, .ribbon, .tally { display: none !important; } }
+
 </style>
 </head>
 <body>
@@ -476,6 +706,8 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   </div>
 </section>
 
+<div class="ribbon" aria-hidden="true"><div class="track"><span>Reset</span><i></i><span>Fiji 2027</span><i></i><span>Natadola Bay</span><i></i><span>29 August - 2 September</span><i></i><span>Reset</span><i></i><span>Five days</span><i></i><span>Natadola Bay</span><i></i><span>Fiji 2027</span><i></i><span>Reset</span><i></i><span>Fiji 2027</span><i></i><span>Natadola Bay</span><i></i><span>29 August - 2 September</span><i></i><span>Reset</span><i></i><span>Five days</span><i></i><span>Natadola Bay</span><i></i><span>Fiji 2027</span><i></i></div></div>
+
 <!-- THE EXPERIENCE -->
 <section class="exp light" id="experience">
   <div class="orb warm" style="width:46vw;height:46vw;right:-12vw;top:-10vw" aria-hidden="true"></div>
@@ -494,7 +726,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
       </ol>
       <p class="note" data-r>Expert education, meaningful connections, curated Fiji experiences, content creation and a 30-day accountability session are all part of your RESET.</p>
     </div>
-    <figure data-r style="--d:.1s"><img src="media/sandbar-couple.jpg" alt="Two people walking a sandbar through the clear turquoise lagoon at Natadola Bay, Fiji" loading="lazy"></figure>
+    <figure data-r style="--d:.1s"><img src="media/sandbar-couple.jpg" srcset="media/m/sandbar-couple.jpg 1280w, media/sandbar-couple.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="Two people walking a sandbar through the clear turquoise lagoon at Natadola Bay, Fiji" loading="lazy"></figure>
   </div>
 </section>
 
@@ -504,12 +736,12 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <p data-r>You have carried the clinic long enough. Come and be looked after.</p>
     <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
   </div>
-  <figure class="pic"><img src="media/massage-close.jpg" alt="A guest with frangipani in her hair, smiling during a massage" loading="lazy" style="object-position:35% 60%"></figure>
+  <figure class="pic"><img src="media/massage-close.jpg" srcset="media/m/massage-close.jpg 1280w, media/massage-close.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A guest with frangipani in her hair, smiling during a massage" loading="lazy" style="object-position:35% 60%"></figure>
 </section>
 
 <!-- THE SETTING -->
 <section class="plate" aria-label="The resort">
-  <img src="media/aerial-reef.jpg" alt="InterContinental Fiji Golf Resort and Spa from the air, with the reef and lagoon of Natadola Bay beyond" loading="lazy">
+  <img src="media/aerial-reef.jpg" srcset="media/m/aerial-reef.jpg 1280w, media/aerial-reef.jpg 2000w" sizes="100vw" decoding="async" alt="InterContinental Fiji Golf Resort and Spa from the air, with the reef and lagoon of Natadola Bay beyond" loading="lazy">
   <div class="wrap">
     <div class="kicker caps" data-r><i></i><span>Natadola Bay, Fiji</span></div>
     <h2 data-r style="--d:.05s">A five-star backdrop for your next chapter.</h2>
@@ -528,11 +760,12 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         <h2 data-r style="--d:.05s">Choose your stay.</h2>
         <p class="lede" data-r style="--d:.1s">Garden View or Beachfront. Every guest enjoys the complete RESET experience.</p>
       </div>
-      <div class="ctrl caps" data-ctrl="stayFlick"><button class="prev" type="button" aria-label="Previous stay"></button><span>1 / 2</span><button class="next" type="button" aria-label="Next stay"></button></div>
+      
     </div>
+    <div class="seg" role="group" aria-label="Choose your stay" data-r><button type="button" aria-pressed="true">Garden View<b>A$6,997</b></button><button type="button" aria-pressed="false">Beachfront<b>A$7,997</b></button><i aria-hidden="true"></i></div>
     <div class="flick" id="stayFlick" data-r tabindex="0" aria-label="The two stays, one at a time">
       <article class="stay">
-        <img src="media/room-bath.jpg" alt="A king room at InterContinental Fiji opening to a private terrace with an outdoor Cleopatra bathtub" loading="lazy">
+        <img src="media/room-bath.jpg" srcset="media/m/room-bath.jpg 1280w, media/room-bath.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A king room at InterContinental Fiji opening to a private terrace with an outdoor Cleopatra bathtub" loading="lazy">
         <div class="txt">
           <p class="no caps">Stay 01</p>
           <h3>Garden View King</h3>
@@ -543,7 +776,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         </div>
       </article>
       <article class="stay">
-        <img src="media/sunset-roofs.jpg" alt="Sunset over Natadola Bay, seen across the beachfront rooftops and palms of InterContinental Fiji" loading="lazy">
+        <img src="media/sunset-roofs.jpg" srcset="media/m/sunset-roofs.jpg 1280w, media/sunset-roofs.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="Sunset over Natadola Bay, seen across the beachfront rooftops and palms of InterContinental Fiji" loading="lazy">
         <div class="txt">
           <p class="no caps">Stay 02</p>
           <h3>Beachfront King</h3>
@@ -556,7 +789,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     </div>
 
     <div class="incl">
-      <img src="media/bath.jpg" alt="A guest in a robe running a deep bath, a glass of wine in hand" loading="lazy" data-r>
+      <img src="media/bath.jpg" srcset="media/m/bath.jpg 1280w, media/bath.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A guest in a robe running a deep bath, a glass of wine in hand" loading="lazy" data-r>
       <div>
         <div class="kicker caps" data-r><i></i><span>Every stay includes</span></div>
         <ul class="ticks">
@@ -680,12 +913,12 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <p data-r>The best conversations happen between sessions.</p>
     <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
   </div>
-  <figure class="pic"><img src="media/beach-selfie.jpg" alt="Two guests taking a photograph with a member of the resort team on the beach" loading="lazy" style="object-position:50% 64%"></figure>
+  <figure class="pic"><img src="media/beach-selfie.jpg" srcset="media/m/beach-selfie.jpg 1280w, media/beach-selfie.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="Two guests taking a photograph with a member of the resort team on the beach" loading="lazy" style="object-position:50% 64%"></figure>
 </section>
 
 <!-- PLATE: boutique -->
 <section class="plate quote" aria-label="A boutique group">
-  <img src="media/aerial-bay.jpg" alt="The sweep of Natadola Bay from the air, with the resort on its point and the river beyond" loading="lazy">
+  <img src="media/aerial-bay.jpg" srcset="media/m/aerial-bay.jpg 1280w, media/aerial-bay.jpg 2000w" sizes="100vw" decoding="async" alt="The sweep of Natadola Bay from the air, with the resort on its point and the river beyond" loading="lazy">
   <div class="wrap">
     <div class="kicker caps" data-r><i></i><span>A boutique group</span></div>
     <h2 data-r style="--d:.05s">With boutique group sizes, the emphasis is on relevant education, practical conversations and meaningful connection with the faculty.</h2>
@@ -720,7 +953,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <p data-r>Leave with the plan already made.</p>
     <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
   </div>
-  <figure class="pic"><img src="media/coconut.jpg" alt="A fresh coconut with fruit and a paper umbrella held over the pool" loading="lazy" style="object-position:60% 50%"></figure>
+  <figure class="pic"><img src="media/coconut.jpg" srcset="media/m/coconut.jpg 1280w, media/coconut.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A fresh coconut with fruit and a paper umbrella held over the pool" loading="lazy" style="object-position:60% 50%"></figure>
 </section>
 
 <!-- PHOTO + VIDEO -->
@@ -728,7 +961,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   <div class="orb warm" style="width:42vw;height:42vw;left:-14vw;top:-8vw" aria-hidden="true"></div>
   <div class="orb" style="width:36vw;height:36vw;right:-12vw;bottom:-10vw" aria-hidden="true"></div>
   <div class="wrap grid">
-    <img src="media/pool-hat.jpg" alt="A guest in a straw hat and sunglasses smiling at the edge of the resort pool with a cocktail" loading="lazy" data-r>
+    <img src="media/pool-hat.jpg" srcset="media/m/pool-hat.jpg 1280w, media/pool-hat.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A guest in a straw hat and sunglasses smiling at the edge of the resort pool with a cocktail" loading="lazy" data-r>
     <div>
       <div class="kicker caps" data-r><i></i><span>Professional photo &amp; video</span></div>
       <h2 data-r style="--d:.05s">Your brand. Beautifully captured.</h2>
@@ -756,7 +989,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <h2 data-r style="--d:.05s">An unforgettable journey, thoughtfully paced.</h2>
     <p class="lede" data-r style="--d:.1s">Three focused education sessions, extraordinary hosted evenings and room to immerse yourself in Fiji.</p>
     <div class="grid" style="margin-top:clamp(44px,7vh,84px)">
-      <figure data-r><img src="media/torch.jpg" alt="A Fijian torch bearer sounding a conch shell at sunset beside the resort pool" loading="lazy"></figure>
+      <figure data-r><img src="media/torch.jpg" srcset="media/m/torch.jpg 1280w, media/torch.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A Fijian torch bearer sounding a conch shell at sunset beside the resort pool" loading="lazy"></figure>
       <div>
         <article class="day" data-r>
           <div class="date"><b>29</b><span class="caps">Sunday / Aug</span></div>
@@ -789,7 +1022,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
 
 <!-- PLATE: dinners -->
 <section class="plate" aria-label="Dining and connection">
-  <img src="media/sunset-beach.jpg" alt="Sunset over the beach at Natadola Bay, with three figures at the water's edge" loading="lazy">
+  <img src="media/sunset-beach.jpg" srcset="media/m/sunset-beach.jpg 1280w, media/sunset-beach.jpg 2000w" sizes="100vw" decoding="async" alt="Sunset over the beach at Natadola Bay, with three figures at the water's edge" loading="lazy">
   <div class="wrap">
     <div class="kicker caps" data-r><i></i><span>Dining &amp; connection</span></div>
     <h2 data-r style="--d:.05s">Beautiful tables. Better conversations.</h2>
@@ -807,16 +1040,18 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         <h2 data-r style="--d:.05s">Fire, flowers and long tables.</h2>
         <p class="lede" data-r style="--d:.1s">Three hosted dinners, three education lunches and breakfast every morning are part of your RESET.</p>
       </div>
-      <div class="ctrl caps" data-ctrl="foodFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 6</span><button class="next" type="button" aria-label="Next photograph"></button></div>
+      <div class="ctrl caps sctrl" data-story="foodStory"><button class="prev" type="button" aria-label="Previous photograph"></button><span>01 / 06</span><button class="next" type="button" aria-label="Next photograph"></button></div>
     </div>
     <div class="reel" style="margin-top:0" data-r>
-      <div class="flick" id="foodFlick" tabindex="0" aria-label="Photographs of dining at the resort, one at a time">
-        <figure><img src="media/dine-fire-buffet.jpg" alt="A buffet of seafood and grilled dishes beside an open fire at dusk" loading="lazy"><figcaption class="caps">Cooked over open fire</figcaption></figure>
-        <figure><img src="media/dine-bowls.jpg" alt="Fresh salads served in carved wooden bowls on a buffet" loading="lazy"><figcaption class="caps">Sharing bowls</figcaption></figure>
-        <figure><img src="media/dine-chef.jpg" alt="A resort chef in whites cooking at an outdoor station among red flowers" loading="lazy"><figcaption class="caps">The resort's chefs</figcaption></figure>
-        <figure><img src="media/dine-cocktails.jpg" alt="A bartender straining a cocktail into salt-rimmed glasses" loading="lazy"><figcaption class="caps">Shaken to order</figcaption></figure>
-        <figure><img src="media/dine-champagne.jpg" alt="A waiter pouring champagne into a tower of coupes on a terrace" loading="lazy"><figcaption class="caps">A champagne tower</figcaption></figure>
-        <figure><img src="media/dine-desserts.jpg" alt="A dessert table of mousse glasses, cupcakes and chocolate" loading="lazy"><figcaption class="caps">The dessert table</figcaption></figure>
+      <div class="story" id="foodStory" tabindex="0" role="group" aria-label="Photographs of dining at the resort. Tap, swipe or use the arrow keys to move through them.">
+        <div class="bars" aria-hidden="true"></div>
+        <figure class="on"><img src="media/dine-fire-buffet.jpg" srcset="media/m/dine-fire-buffet.jpg 1280w, media/dine-fire-buffet.jpg 2000w" sizes="(max-width: 900px) 100vw, 90vw" loading="lazy" decoding="async" alt="A buffet of seafood and grilled dishes beside an open fire at dusk"><figcaption><small>Fire</small>Cooked over open fire.</figcaption></figure>
+        <figure><img data-src="media/dine-bowls.jpg" alt="Fresh salads served in carved wooden bowls on a buffet"><figcaption><small>To share</small>Sharing bowls.</figcaption></figure>
+        <figure><img data-src="media/dine-chef.jpg" alt="A resort chef in whites cooking at an outdoor station among red flowers" style="object-position:70% 40%"><figcaption><small>The kitchen</small>The resort's chefs.</figcaption></figure>
+        <figure><img data-src="media/dine-cocktails.jpg" alt="A bartender straining a cocktail into salt-rimmed glasses"><figcaption><small>The bar</small>Shaken to order.</figcaption></figure>
+        <figure><img data-src="media/dine-champagne.jpg" alt="A waiter pouring champagne into a tower of coupes on a terrace" style="object-position:45% 50%"><figcaption><small>A toast</small>A champagne tower.</figcaption></figure>
+        <figure><img data-src="media/dine-desserts.jpg" alt="A dessert table of mousse glasses, cupcakes and chocolate"><figcaption><small>To finish</small>The dessert table.</figcaption></figure>
+        <p class="hint caps" aria-hidden="true">Tap to move. Hold to pause.</p>
       </div>
       <p class="fine">Resort photography, shown as a guide to dining at InterContinental Fiji.</p>
     </div>
@@ -829,7 +1064,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <p data-r>Your seat at the long table is waiting.</p>
     <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
   </div>
-  <figure class="pic"><img src="media/dine-long-table.jpg" alt="A long table set with tropical flowers and glassware on a terrace, a chef at the buffet behind" loading="lazy" style="object-position:50% 60%"></figure>
+  <figure class="pic"><img src="media/dine-long-table.jpg" srcset="media/m/dine-long-table.jpg 1280w, media/dine-long-table.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A long table set with tropical flowers and glassware on a terrace, a chef at the buffet behind" loading="lazy" style="object-position:50% 60%"></figure>
 </section>
 
 <!-- TAKE-HOME -->
@@ -860,12 +1095,12 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <p data-r>Places are limited by design.</p>
     <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
   </div>
-  <figure class="pic"><img src="media/spa-pool-back.jpg" alt="A guest resting in the spa's vitality pool, facing the rainforest garden" loading="lazy" style="object-position:50% 55%"></figure>
+  <figure class="pic"><img src="media/spa-pool-back.jpg" srcset="media/m/spa-pool-back.jpg 1280w, media/spa-pool-back.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A guest resting in the spa's vitality pool, facing the rainforest garden" loading="lazy" style="object-position:50% 55%"></figure>
 </section>
 
 <!-- PLATE: the point -->
 <section class="plate quote" aria-label="The resort on Natadola Bay">
-  <img src="media/aerial-point.jpg" alt="The resort's pools, palms and beach curving around its point on Natadola Bay" loading="lazy">
+  <img src="media/aerial-point.jpg" srcset="media/m/aerial-point.jpg 1280w, media/aerial-point.jpg 2000w" sizes="100vw" decoding="async" alt="The resort's pools, palms and beach curving around its point on Natadola Bay" loading="lazy">
   <div class="wrap">
     <div class="kicker caps" data-r><i></i><span>The Fiji feeling</span></div>
     <h2 data-r style="--d:.05s">RESET makes room for the parts of success that cannot be measured on a spreadsheet.</h2>
@@ -887,7 +1122,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
       <dl data-r>
         <div><dt class="caps">Curated retreat gifts</dt><dd>Thoughtful touches chosen especially for RESET guests.</dd></div>
         <div><dt class="caps">Fijian cultural experiences</dt><dd>Meaningful cultural moments celebrating the warmth and character of Fiji.</dd></div>
-        <div><dt class="caps">Breathwork &amp; sound healing</dt><dd>Guided breathwork and immersive sound experiences led by Jack Lombardi.</dd></div>
+        <div><dt class="caps">Breathwork &amp; sound healing</dt><dd>Guided breathwork and immersive sound experiences led by Jack Lombardi.<button class="listen caps" type="button" data-vid="media/fac-jack.mp4"><i aria-hidden="true"></i><span>Hear the bowls</span></button></dd></div>
         <div><dt class="caps">Beachfront connection</dt><dd>A beautiful final celebration with your peers in an extraordinary setting.</dd></div>
         <div><dt class="caps">Your own moments of stillness</dt><dd>Relaxed time to enjoy Natadola Bay, the resort and the people you meet.</dd></div>
       </dl>
@@ -895,36 +1130,37 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
 
     <div class="cine" data-r>
       <div class="bar">
-        <p class="caps" style="color:var(--sand)">Five days, in pictures</p>
-        <button class="hold" type="button" id="seqHold" aria-label="Pause the pictures"></button>
+        <p class="caps" style="color:var(--sand)">Stillness, food and connection</p>
+        <button class="hold" type="button" id="cineHold" aria-label="Pause film"></button>
       </div>
-      <div class="frame seq" id="seq" aria-label="A sequence of photographs of the resort, changing every few seconds">
-        <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <figure class="on"><img src="media/culture-torch-walk.jpg" alt="Two Fijian torch bearers in traditional dress walking the lagoon shore at dusk" loading="lazy"><figcaption><small>Dusk</small>The torches are lit along the shore.</figcaption></figure>
-        <figure><img src="media/spa-sauna.jpg" alt="A guest resting in a warmly lit sauna, seen through tropical leaves" loading="lazy"><figcaption><small>Stillness</small>An hour that belongs only to you.</figcaption></figure>
-        <figure><img src="media/infinity-pool.jpg" alt="The hilltop infinity pool looking over the resort rooftops to the ocean" loading="lazy"><figcaption><small>Above the bay</small>The hilltop pool, looking out over the bay.</figcaption></figure>
-        <figure><img src="media/room-lounge.jpg" alt="A king room lounge at InterContinental Fiji opening to a terrace" loading="lazy"><figcaption><small>Your room</small>Your own sanctuary for four nights.</figcaption></figure>
-        <figure><img src="media/sandbar-boat.jpg" alt="A boat pulled up on the sandbar in the lagoon, jet skis passing behind" loading="lazy"><figcaption><small>The lagoon</small>A sandbar in clear water, between sessions.</figcaption></figure>
-        <figure><img src="media/culture-fire-dance.jpg" alt="Fire dancers spinning rings of flame on the beach at night" loading="lazy"><figcaption><small>After dark</small>Fire on the beach.</figcaption></figure>
-        <figure><img src="media/room-bed.jpg" alt="A king bed dressed in white linen in a room at InterContinental Fiji" loading="lazy"><figcaption><small>Rest</small>White linen, and nowhere to be.</figcaption></figure>
-        <figure><img src="media/snorkel.jpg" alt="Two snorkellers among striped reef fish in clear water" loading="lazy"><figcaption><small>The reef</small>Then the reef, if you feel like it.</figcaption></figure>
-      </div>
+      <div class="frame gate"><video id="cineFilm" muted playsinline loop preload="none" poster="media/experience-poster.jpg" data-src="media/experience-film.mp4" aria-label="A silent film: rippling water, spa treatments, dishes cooked over fire, a long table set for dinner, torch bearers at dusk, a circle of people floating in a pool, and a sunrise"></video></div>
+      <p class="fine">Some footage is from an earlier retreat, shown to give a feel for the experience. Spa and dining photography courtesy of InterContinental Fiji.</p>
     </div>
 
     <div class="reel" data-r>
       <div class="bar">
         <p class="caps" style="color:var(--sand)">The resort, in your own time</p>
-        <div class="ctrl caps" data-ctrl="reelFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 8</span><button class="next" type="button" aria-label="Next photograph"></button></div>
+        <div class="ctrl caps sctrl" data-story="resortStory"><button class="prev" type="button" aria-label="Previous photograph"></button><span>01 / 16</span><button class="next" type="button" aria-label="Next photograph"></button></div>
       </div>
-      <div class="flick" id="reelFlick" tabindex="0" aria-label="Photographs of the resort and its people, one at a time">
-        <figure><img src="media/massage-twin.jpg" alt="Two therapists giving massages side by side in a sunlit spa suite" loading="lazy"><figcaption class="caps">The resort spa</figcaption></figure>
-        <figure><img src="media/massage-smile.jpg" alt="A smiling spa therapist giving a back massage" loading="lazy"><figcaption class="caps">Fijian warmth</figcaption></figure>
-        <figure><img src="media/spa-pool-front.jpg" alt="A guest walking through the vitality pool beside a stone wall and palms" loading="lazy"><figcaption class="caps">Moments of stillness</figcaption></figure>
-        <figure><img src="media/culture-warriors.jpg" alt="Two Fijian men in traditional dress laughing together, one holding a lit torch, the resort behind" loading="lazy"><figcaption class="caps">A Fijian welcome</figcaption></figure>
-        <figure><img src="media/spa-garden-shower.jpg" alt="A guest at the spa's outdoor garden shower among palms" loading="lazy"><figcaption class="caps">The spa garden shower</figcaption></figure>
-        <figure><img src="media/spa-sauna-tall.jpg" alt="A guest resting in a warmly lit sauna framed by tropical leaves" loading="lazy"><figcaption class="caps">The sauna</figcaption></figure>
-        <figure><img src="media/pool-service.jpg" alt="A waiter handing a cocktail to a guest on a sun lounger by the pool" loading="lazy"><figcaption class="caps">Poolside</figcaption></figure>
-        <figure><img src="media/steam.jpg" alt="Two guests laughing in the spa steam room" loading="lazy"><figcaption class="caps">The steam room</figcaption></figure>
+      <div class="story" id="resortStory" tabindex="0" role="group" aria-label="Photographs of the resort and its people. Tap, swipe or use the arrow keys to move through them.">
+        <div class="bars" aria-hidden="true"></div>
+        <figure class="on"><img src="media/culture-torch-walk.jpg" srcset="media/m/culture-torch-walk.jpg 1280w, media/culture-torch-walk.jpg 2000w" sizes="(max-width: 900px) 100vw, 90vw" loading="lazy" decoding="async" alt="Two Fijian torch bearers in traditional dress walking the lagoon shore at dusk"><figcaption><small>Dusk</small>The torches are lit along the shore.</figcaption></figure>
+        <figure><img data-src="media/infinity-pool.jpg" alt="The hilltop infinity pool looking over the resort rooftops to the ocean"><figcaption><small>Above the bay</small>The hilltop pool, looking out over the bay.</figcaption></figure>
+        <figure><img data-src="media/room-lounge.jpg" alt="A king room lounge at InterContinental Fiji opening to a terrace"><figcaption><small>Your room</small>Your own sanctuary for four nights.</figcaption></figure>
+        <figure><img data-src="media/massage-twin.jpg" alt="Two therapists giving massages side by side in a sunlit spa suite"><figcaption><small>The spa</small>The resort spa.</figcaption></figure>
+        <figure><img data-src="media/sandbar-boat.jpg" alt="A boat pulled up on the sandbar in the lagoon, jet skis passing behind"><figcaption><small>The lagoon</small>A sandbar in clear water, between sessions.</figcaption></figure>
+        <figure><img data-src="media/spa-pool-front.jpg" alt="A guest walking through the vitality pool beside a stone wall and palms" style="object-position:38% 50%"><figcaption><small>Stillness</small>Moments of stillness.</figcaption></figure>
+        <figure><img data-src="media/culture-warriors.jpg" alt="Two Fijian men in traditional dress laughing together, one holding a lit torch, the resort behind"><figcaption><small>Welcome</small>A Fijian welcome.</figcaption></figure>
+        <figure><img data-src="media/pool-service.jpg" alt="A waiter handing a cocktail to a guest on a sun lounger by the pool" style="object-position:50% 62%"><figcaption><small>Poolside</small>Poolside, with something cold.</figcaption></figure>
+        <figure><img data-src="media/spa-sauna.jpg" alt="A guest resting in a warmly lit sauna, seen through tropical leaves" style="object-position:62% 50%"><figcaption><small>The sauna</small>An hour that belongs only to you.</figcaption></figure>
+        <figure><img data-src="media/snorkel.jpg" alt="Two snorkellers among striped reef fish in clear water"><figcaption><small>The reef</small>Then the reef, if you feel like it.</figcaption></figure>
+        <figure><img data-src="media/spa-garden-shower.jpg" alt="A guest at the spa's outdoor garden shower among palms" style="object-position:72% 50%"><figcaption><small>The spa garden</small>The garden shower.</figcaption></figure>
+        <figure><img data-src="media/massage-smile.jpg" alt="A smiling spa therapist giving a back massage" style="object-position:45% 40%"><figcaption><small>Warmth</small>Fijian warmth.</figcaption></figure>
+        <figure><img data-src="media/culture-fire-dance.jpg" alt="Fire dancers spinning rings of flame on the beach at night"><figcaption><small>After dark</small>Fire on the beach.</figcaption></figure>
+        <figure><img data-src="media/steam.jpg" alt="Two guests laughing in the spa steam room"><figcaption><small>The steam room</small>The steam room.</figcaption></figure>
+        <figure><img data-src="media/room-bed.jpg" alt="A king bed dressed in white linen in a room at InterContinental Fiji"><figcaption><small>Rest</small>White linen, and nowhere to be.</figcaption></figure>
+        <figure><img data-src="media/spa-sauna-tall.jpg" alt="A guest resting in a warmly lit sauna framed by tropical leaves" style="object-position:50% 55%"><figcaption><small>Quiet</small>Heat, leaves and quiet.</figcaption></figure>
+        <p class="hint caps" aria-hidden="true">Tap to move. Hold to pause.</p>
       </div>
       <p class="fine">Resort spa treatments and optional activities are booked separately.</p>
     </div>
@@ -937,7 +1173,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <p data-r>Give yourself the five days.</p>
     <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
   </div>
-  <figure class="pic"><img src="media/spa-pool-step.jpg" alt="A guest stepping into the spa's vitality pool, framed by palms" loading="lazy" style="object-position:50% 50%"></figure>
+  <figure class="pic"><img src="media/spa-pool-step.jpg" srcset="media/m/spa-pool-step.jpg 1280w, media/spa-pool-step.jpg 2000w" sizes="(max-width: 900px) 100vw, 60vw" decoding="async" alt="A guest stepping into the spa's vitality pool, framed by palms" loading="lazy" style="object-position:50% 50%"></figure>
 </section>
 
 <!-- VALUE -->
@@ -948,10 +1184,11 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <div class="kicker caps" data-r><i></i><span>A premium experience, inside &amp; out</span></div>
     <h2 data-r style="--d:.05s">Imagine booking all of this separately.</h2>
     <p class="lede" data-r style="--d:.1s">Professional visual content. Specialist education. Private connections. A luxury Fiji escape. RESET brings them into one exceptional experience.</p>
+    <div class="tally" aria-hidden="true"><span class="caps">Booked separately, so far</span><b>A$<i id="tallyN">0</i></b></div>
     <ol class="stack">
-      <li data-r><h3>Two full education days and a focused half-day</h3><b><small>Up to</small>A$3,500</b><p>Some Australian professional conferences and specialist day workshops run from A$695 to A$1,400 a day. RESET gives you two and a half days, with boutique access to a seven-person faculty.</p></li>
-      <li data-r><h3>Professional brand photography and video</h3><b><small>Up to</small>A$3,500</b><p>Australian photo-and-video branding packages are advertised from A$1,350 to A$3,500 and higher. Yours are captured at Natadola Bay.</p></li>
-      <li data-r><h3>Specialist marketing and content training</h3><b><small>Up to</small>A$1,395</b><p>Published Australian full-day marketing and AI-content courses run from A$560 to A$1,395. Here you build the system, the content and the plan for your own clinic.</p></li>
+      <li data-r data-v="3500"><h3>Two full education days and a focused half-day</h3><b><small>Up to</small>A$3,500</b><p>Some Australian professional conferences and specialist day workshops run from A$695 to A$1,400 a day. RESET gives you two and a half days, with boutique access to a seven-person faculty.</p></li>
+      <li data-r data-v="3500"><h3>Professional brand photography and video</h3><b><small>Up to</small>A$3,500</b><p>Australian photo-and-video branding packages are advertised from A$1,350 to A$3,500 and higher. Yours are captured at Natadola Bay.</p></li>
+      <li data-r data-v="1395"><h3>Specialist marketing and content training</h3><b><small>Up to</small>A$1,395</b><p>Published Australian full-day marketing and AI-content courses run from A$560 to A$1,395. Here you build the system, the content and the plan for your own clinic.</p></li>
       <li class="inc" data-r><h3>Four nights of five-star accommodation</h3><b>Included</b><p>Your own king room at InterContinental Fiji Golf Resort &amp; Spa, with breakfast every morning.</p></li>
       <li class="inc" data-r><h3>Three hosted dinners</h3><b>Included</b><p>The Welcome Dinner, the Mastermind Dinner and a private beachfront long table, each with selected beverages.</p></li>
       <li class="inc" data-r><h3>Three lunches and daily refreshments</h3><b>Included</b><p>Looked after through every education day.</p></li>
@@ -968,11 +1205,13 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   </div>
 </section>
 
+<div class="ribbon rev" aria-hidden="true"><div class="track"><span>Your next chapter</span><i></i><span>Begins in Fiji</span><i></i><span>Reset</span><i></i><span>29 August - 2 September 2027</span><i></i><span>Your next chapter</span><i></i><span>Begins in Fiji</span><i></i><span>Reset</span><i></i><span>Natadola Bay</span><i></i><span>Your next chapter</span><i></i><span>Begins in Fiji</span><i></i><span>Reset</span><i></i><span>29 August - 2 September 2027</span><i></i><span>Your next chapter</span><i></i><span>Begins in Fiji</span><i></i><span>Reset</span><i></i><span>Natadola Bay</span><i></i></div></div>
+
 <!-- ENQUIRE -->
 <section class="enq" id="enquire">
-  <img class="bg" src="media/aerial-sunrise.jpg" alt="" loading="lazy">
+  <img class="bg" src="media/aerial-sunrise.jpg" srcset="media/m/aerial-sunrise.jpg 1280w, media/aerial-sunrise.jpg 2000w" sizes="100vw" decoding="async" alt="" loading="lazy">
   <div class="wrap">
-    <img class="seal" src="media/seal-white.png" alt="Aesthetic Business Masters seal" data-r>
+    <div class="sealring" data-r><svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ringp" d="M100,100 m-93,0 a93,93 0 1,1 186,0 a93,93 0 1,1 -186,0"/></defs><text><textPath href="#ringp" textLength="578" lengthAdjust="spacing">Reset · Fiji 2027 · Natadola Bay · 29 August - 2 September · </textPath></text></svg><img class="seal" src="media/seal-white.png" alt="Aesthetic Business Masters seal"></div>
     <div class="kicker caps" data-r><i></i><span>Your RESET starts here</span><i></i></div>
     <h2 data-r style="--d:.05s">Your next chapter begins in Fiji.</h2>
     <p class="lede" data-r style="--d:.1s">29 August - 2 September 2027. InterContinental Fiji Golf Resort &amp; Spa, Natadola Bay.</p>
@@ -992,6 +1231,8 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
       <li data-r>Curated gifting, Fijian cultural experiences, breathwork and sound immersion.</li>
       <li data-r>30-day group accountability catch-up after the retreat.</li>
     </ul>
+
+    <p class="until" data-r><b><span id="untilN" data-count="0">0</span></b><span class="caps">days until we meet in Fiji</span></p>
 
     <div class="go" data-r>
       <p class="caps" style="color:var(--sand)">Limited places</p>
@@ -1020,6 +1261,12 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   </div>
 </footer>
 
+<div class="pline" aria-hidden="true"><i></i></div>
+<div class="dock" id="dock"><div class="ch" aria-hidden="true"><b>01</b><span class="caps">The experience</span></div><a class="btn caps" href="#enquire">Apply</a></div>
+<a class="badge" id="badge" href="#enquire" aria-label="Apply to secure your spot"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="badgep" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#badgep" textLength="496" lengthAdjust="spacing">Apply to secure your spot · Apply to secure your spot · </textPath></text></svg><img src="media/tx/mark-slate.webp" alt=""></a>
+<div class="ptr" aria-hidden="true"><i></i></div>
+
+
 <script>
 (function () {
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1044,15 +1291,16 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menu(false); });
 
   /* hero film: loads after the intro, pauses on request and when out of view */
+  var heroSrc = window.matchMedia('(max-width: 900px)').matches ? 'media/hero-loop-m.mp4' : 'media/hero-loop.mp4';
   var film = document.getElementById('heroFilm'), hold = document.getElementById('hold'), userPaused = still;
   function setHold() { hold.classList.toggle('paused', film.paused); hold.setAttribute('aria-label', film.paused ? 'Play film' : 'Pause film'); }
   film.addEventListener('timeupdate', function () { if (film.currentTime > 17.1) film.currentTime = 0; });
   film.addEventListener('play', setHold); film.addEventListener('pause', setHold);
   hold.addEventListener('click', function () {
-    if (!film.src) film.src = 'media/hero-loop.mp4';
+    if (!film.src) film.src = heroSrc;
     if (film.paused) { userPaused = false; film.play().catch(function () {}); } else { userPaused = true; film.pause(); }
   });
-  if (!still) setTimeout(function () { film.src = 'media/hero-loop.mp4'; film.play().catch(function () {}); }, 900);
+  if (!still) setTimeout(function () { film.src = heroSrc; film.play().catch(function () {}); }, 900);
   setHold();
   new IntersectionObserver(function (es) {
     es.forEach(function (e) { if (!film.src) return; if (e.isIntersecting) { if (!userPaused) film.play().catch(function () {}); } else film.pause(); });
@@ -1082,23 +1330,6 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     f.addEventListener('scroll', function () { f.querySelectorAll('video').forEach(function (v) { var r = v.getBoundingClientRect(), fr = f.getBoundingClientRect(); if (r.right < fr.left + 40 || r.left > fr.right - 40) v.pause(); }); }, { passive: true });
   });
 
-  /* the sequence: photographs that move like film */
-  (function () {
-    var seq = document.getElementById('seq'), hold = document.getElementById('seqHold'); if (!seq) return;
-    var figs = seq.querySelectorAll('figure'), bars = seq.querySelectorAll('.bars i'), i = 0, timer = null, paused = still, seen = false;
-    function paint() {
-      figs.forEach(function (f, n) { f.classList.toggle('on', n === i); });
-      bars.forEach(function (b, n) { b.classList.remove('live'); b.classList.toggle('done', n < i); });
-      if (!paused && seen) requestAnimationFrame(function () { requestAnimationFrame(function () { bars[i].classList.add('live'); }); });
-    }
-    function next() { i = (i + 1) % figs.length; paint(); }
-    function run() { clearInterval(timer); if (!paused && seen) timer = setInterval(next, 6000); paint(); hold.classList.toggle('paused', paused); hold.setAttribute('aria-label', paused ? 'Play the pictures' : 'Pause the pictures'); }
-    hold.addEventListener('click', function () { paused = !paused; run(); });
-    seq.addEventListener('click', function () { next(); run(); });
-    new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; run(); }); }, { threshold: .3 }).observe(seq);
-    run();
-  })();
-
   /* still photographs that breathe: plates and bands settle and drift, pictures wipe open, carousels play themselves */
   var live = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('live', e.isIntersecting); }); }, { threshold: .12 });
   document.querySelectorAll('.plate, .band').forEach(function (p) { live.observe(p); });
@@ -1112,21 +1343,6 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     });
   }
   if (!still) { window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(drift); } }, { passive: true }); drift(); }
-  document.querySelectorAll('.reel .flick').forEach(function (f) {
-    var auto = !still, seen = false, timer = null;
-    function cur() { var n = Math.round(f.scrollLeft / f.clientWidth); [].forEach.call(f.children, function (c, k) { c.classList.toggle('cur', k === n); }); }
-    function step() {
-      if (!auto || !seen) return;
-      var n = Math.round(f.scrollLeft / f.clientWidth), k = (n + 1) % f.children.length;
-      f.scrollTo({ left: k * f.clientWidth, behavior: k ? 'smooth' : 'auto' });
-    }
-    function stop() { auto = false; clearInterval(timer); }
-    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (ev) { f.addEventListener(ev, stop, { passive: true }); });
-    var c = document.querySelector('[data-ctrl="' + f.id + '"]'); if (c) c.addEventListener('click', stop);
-    new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; }); }, { threshold: .5 }).observe(f);
-    f.addEventListener('scroll', function () { requestAnimationFrame(cur); }, { passive: true }); cur();
-    if (auto) timer = setInterval(step, 5200);
-  });
 
   /* flick carousels: one at a time, by swipe, arrow buttons or arrow keys */
   document.querySelectorAll('[data-ctrl]').forEach(function (c) {
@@ -1140,6 +1356,247 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     window.addEventListener('resize', show); show();
   });
 })();
+</script>
+<script>
+/* V4: texture, brand, movement, touch */
+(function () {
+  var root = document.documentElement; root.classList.add('js');
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var small = window.matchMedia('(max-width: 900px)');
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return [].slice.call((r || document).querySelectorAll(s)); }
+  function pad(n) { return ('0' + n).slice(-2); }
+  function go(el, left) { el.scrollTo({ left: left, behavior: still ? 'auto' : 'smooth' }); }
+
+  /* chapters: a number on every section, named in the dock */
+  var chapters = [['experience', 'The experience'], ['stays', 'Stays'], ['faculty', 'Faculty'], ['program', 'Program'], ['content', 'Photo and video'], ['days', 'Five days'], ['table', 'At the table'], ['takehome', 'Take home'], ['fiji', 'The Fiji feeling'], ['value', 'The value'], ['enquire', 'Apply']]
+    .map(function (c, i) { var el = document.getElementById(c[0]); return el ? { el: el, name: c[1], no: pad(i + 1) } : null; }).filter(Boolean);
+  chapters.forEach(function (c) {
+    if (c.el.id === 'enquire') return;
+    var k = $('.kicker', c.el); if (!k) return;
+    var b = document.createElement('b'); b.className = 'no'; b.textContent = c.no; b.setAttribute('aria-hidden', 'true'); k.insertBefore(b, k.firstChild);
+  });
+
+  /* headings rise word by word */
+  $$('h2[data-r]').forEach(function (h) {
+    if (h.children.length) return;
+    var text = h.textContent.trim(), words = text.split(/\s+/); h.setAttribute('aria-label', text); h.textContent = '';
+    words.forEach(function (w, i) {
+      var o = document.createElement('span'), n = document.createElement('span');
+      o.className = 'w'; o.setAttribute('aria-hidden', 'true'); n.textContent = w; n.style.setProperty('--i', i);
+      o.appendChild(n); h.appendChild(o); h.appendChild(document.createTextNode(' '));
+    });
+    h.classList.add('sp');
+  });
+
+  /* photographs open like a curtain: the wrapper is watched, the image is never clipped */
+  var shotIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); shotIO.unobserve(e.target); } }); }, { threshold: .18 });
+  $$('.exp figure img, .days figure img, .incl > img, .brand .grid > img').forEach(function (im) {
+    var s = document.createElement('span'); s.className = 'shot';
+    if (im.hasAttribute('data-r')) im.removeAttribute('data-r');
+    im.parentNode.insertBefore(s, im); s.appendChild(im);
+    if (still) s.classList.add('in'); else shotIO.observe(s);
+  });
+
+  /* the seal as a slow-turning watermark */
+  [['experience', 's'], ['program', 'w'], ['takehome', 's'], ['fiji', 'w']].forEach(function (p) {
+    var el = document.getElementById(p[0]); if (!el) return;
+    var d = document.createElement('div'); d.className = 'wm ' + p[1]; d.setAttribute('aria-hidden', 'true'); el.insertBefore(d, el.firstChild);
+  });
+
+  /* scroll: progress, dock, badge, chapter, drifting marks, the hero letting go */
+  var pl = $('.pline i'), dock = $('#dock'), badge = $('#badge'), heroFoot = $('.hero .foot'), enq = $('#enquire');
+  var chNo = dock && $('.ch b', dock), chName = dock && $('.ch span', dock), curCh = -1, ticking = false, vis = [];
+  var visIO = new IntersectionObserver(function (es) { es.forEach(function (e) { var i = vis.indexOf(e.target); if (e.isIntersecting && i < 0) vis.push(e.target); if (!e.isIntersecting && i >= 0) vis.splice(i, 1); }); });
+  $$('.ghost, .wm').forEach(function (g) { visIO.observe(g); });
+  function onScroll() {
+    ticking = false;
+    var y = window.scrollY, vh = window.innerHeight, max = document.documentElement.scrollHeight - vh;
+    if (pl) pl.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ')';
+    var past = y > vh * .7, atEnd = enq ? enq.getBoundingClientRect().top < vh * .6 : false;
+    if (dock) dock.classList.toggle('on', past && !atEnd);
+    if (badge) badge.classList.toggle('on', past && !atEnd);
+    var idx = -1; for (var i = 0; i < chapters.length; i++) { if (chapters[i].el.getBoundingClientRect().top < vh * .55) idx = i; }
+    if (dock && idx >= 0 && idx !== curCh) {
+      curCh = idx; chNo.textContent = chapters[idx].no; chName.textContent = chapters[idx].name;
+      dock.classList.remove('tick'); void dock.offsetWidth; dock.classList.add('tick');
+    }
+    if (still) return;
+    vis.forEach(function (g) {
+      var r = g.parentNode.getBoundingClientRect(), t = (r.top + r.height / 2 - vh / 2) / vh;
+      g.style.transform = g.classList.contains('wm') ? 'rotate(' + (t * -24).toFixed(2) + 'deg)' : 'translate3d(' + (t * -7).toFixed(2) + '%,0,0)';
+    });
+    if (heroFoot && y < vh * 1.1) { heroFoot.style.transform = 'translate3d(0,' + (y * -.14).toFixed(1) + 'px,0)'; heroFoot.style.opacity = Math.max(0, 1 - y / (vh * .8)).toFixed(3); }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  window.addEventListener('resize', onScroll); onScroll();
+
+  /* stories: tap to move, hold to pause, swipe, or let them play */
+  function story(el) {
+    var figs = $$('figure', el), bars = $('.bars', el), n = figs.length, i = 0, anim = null, seen = false, held = false, D = 5600;
+    var ctrl = $('[data-story="' + el.id + '"]'), label = ctrl && $('span', ctrl);
+    figs.forEach(function () { bars.appendChild(document.createElement('i')).appendChild(document.createElement('b')); });
+    var fills = $$('.bars b', el);
+    function load(k) { var im = $('img', figs[(k + n) % n]); if (im && !im.getAttribute('src') && im.dataset.src) im.src = small.matches ? im.dataset.src.replace('media/', 'media/m/') : im.dataset.src; }
+    function run() {
+      if (anim) { anim.onfinish = null; anim.cancel(); anim = null; }
+      if (still || !seen || !fills[i].animate) return;
+      anim = fills[i].animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: D, easing: 'linear', fill: 'forwards' });
+      anim.onfinish = function () { show(i + 1); };
+      if (held) anim.pause();
+    }
+    function show(k) {
+      i = (k + n) % n; load(i); if (seen) load(i + 1);
+      figs.forEach(function (f, x) { f.classList.toggle('on', x === i); });
+      fills.forEach(function (b, x) { b.style.transform = 'scaleX(' + (x < i ? 1 : 0) + ')'; });
+      if (label) label.textContent = pad(i + 1) + ' / ' + pad(n);
+      run();
+    }
+    function used() { el.classList.add('used'); }
+    var x0 = 0, y0 = 0, moved = false, holdT = null, down = false;
+    function release() { clearTimeout(holdT); var was = held; held = false; el.classList.remove('held'); if (was && anim) anim.play(); return was; }
+    el.addEventListener('pointerdown', function (e) {
+      down = true; x0 = e.clientX; y0 = e.clientY; moved = false;
+      holdT = setTimeout(function () { held = true; el.classList.add('held'); if (anim) anim.pause(); }, 240);
+    });
+    el.addEventListener('pointermove', function (e) { if (down && (Math.abs(e.clientX - x0) > 12 || Math.abs(e.clientY - y0) > 12)) { moved = true; if (!held) clearTimeout(holdT); } });
+    el.addEventListener('pointerup', function (e) {
+      if (!down) return; down = false;
+      if (release()) { used(); return; }
+      var dx = e.clientX - x0, dy = e.clientY - y0;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) { used(); show(i + (dx < 0 ? 1 : -1)); return; }
+      if (moved) return;
+      var r = el.getBoundingClientRect(); used(); show(i + ((e.clientX - r.left) < r.width * .3 ? -1 : 1));
+    });
+    el.addEventListener('pointercancel', function () { down = false; release(); });
+    el.addEventListener('pointerleave', function () { if (down) { down = false; release(); } });
+    el.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); used(); show(i + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); used(); show(i - 1); } });
+    if (ctrl) { $('.prev', ctrl).addEventListener('click', function () { used(); show(i - 1); }); $('.next', ctrl).addEventListener('click', function () { used(); show(i + 1); }); }
+    new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; if (seen) { load(i + 1); run(); } else if (anim) { anim.onfinish = null; anim.cancel(); anim = null; } }); }, { threshold: .45 }).observe(el);
+    show(0);
+  }
+  $$('.story').forEach(story);
+
+  /* the film: loads when near, plays in view, pauses on request */
+  var cine = $('#cineFilm'), cineHold = $('#cineHold'), cinePaused = still;
+  if (cine && cineHold) {
+    var setCine = function () { cineHold.classList.toggle('paused', cine.paused); cineHold.setAttribute('aria-label', cine.paused ? 'Play film' : 'Pause film'); };
+    cine.addEventListener('play', setCine); cine.addEventListener('pause', setCine);
+    cineHold.addEventListener('click', function () {
+      if (!cine.getAttribute('src')) cine.src = cine.dataset.src;
+      if (cine.paused) { cinePaused = false; cine.play().catch(function () {}); } else { cinePaused = true; cine.pause(); }
+    });
+    setCine();
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { if (!cinePaused) { if (!cine.getAttribute('src')) cine.src = cine.dataset.src; cine.play().catch(function () {}); } } else cine.pause();
+      });
+    }, { threshold: .25 }).observe(cine);
+  }
+
+  /* value: a tally that adds up as you read, then the strike */
+  var tally = $('.tally'), tallyN = $('#tallyN'), sum = $('.sum'), total = 0, shown = 0, raf = null;
+  function roll(to) {
+    var from = shown, t0 = null; cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function step(t) {
+      if (!t0) t0 = t; var p = Math.min((t - t0) / 1000, 1); shown = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3)));
+      tallyN.textContent = shown.toLocaleString('en-AU'); if (p < 1) raf = requestAnimationFrame(step);
+    });
+  }
+  if (tally && tallyN && sum) {
+    var vio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var li = e.target; if (!e.isIntersecting || li.classList.contains('on')) return;
+        li.classList.add('on'); total += +li.dataset.v; if (still) { shown = total; tallyN.textContent = total.toLocaleString('en-AU'); } else roll(total);
+      });
+    }, { threshold: .5, rootMargin: '0px 0px -22% 0px' });
+    $$('.stack li[data-v]').forEach(function (li) { vio.observe(li); });
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) { tally.classList.toggle('done', e.isIntersecting || e.boundingClientRect.top < 0); if (e.isIntersecting) sum.classList.add('struck'); });
+    }, { threshold: .3 }).observe(sum);
+  }
+
+  /* stays: the switch follows the swipe */
+  var sf = $('#stayFlick'), seg = $('.seg');
+  if (sf && seg) {
+    var sb = $$('button', seg);
+    var segShow = function () { var k = Math.round(sf.scrollLeft / sf.clientWidth); [].forEach.call(sf.children, function (c, x) { c.classList.toggle('cur', x === k); }); sb.forEach(function (b, x) { b.setAttribute('aria-pressed', x === k ? 'true' : 'false'); }); seg.style.setProperty('--k', k); };
+    sb.forEach(function (b, x) { b.addEventListener('click', function () { go(sf, x * sf.clientWidth); }); });
+    sf.addEventListener('scroll', function () { requestAnimationFrame(segShow); }, { passive: true }); window.addEventListener('resize', segShow); segShow();
+  }
+
+  /* faculty: first names as tabs */
+  var ff = $('#facFlick');
+  if (ff) {
+    var tabs = document.createElement('div'); tabs.className = 'ftabs'; tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', 'Jump to a faculty member');
+    $$('.prof h3', ff).forEach(function (h, x) {
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = h.textContent.trim().split(' ')[0];
+      b.addEventListener('click', function () { go(ff, x * ff.clientWidth); }); tabs.appendChild(b);
+    });
+    ff.parentNode.insertBefore(tabs, ff);
+    var lastTab = -1, ft = function () {
+      var k = Math.round(ff.scrollLeft / ff.clientWidth); if (k === lastTab) return; lastTab = k;
+      [].forEach.call(ff.children, function (c, x) { c.classList.toggle('cur', x === k); });
+      [].forEach.call(tabs.children, function (b, x) { b.classList.toggle('on', x === k); });
+      var b = tabs.children[k]; if (b && tabs.scrollWidth > tabs.clientWidth) go(tabs, b.offsetLeft - tabs.clientWidth / 2 + b.clientWidth / 2);
+    };
+    ff.addEventListener('scroll', function () { requestAnimationFrame(ft); }, { passive: true }); ft();
+  }
+
+  /* five days: dates that follow the day you are reading */
+  var days = $$('.days .day'), grid = $('.days .grid');
+  if (days.length && grid) {
+    var dn = document.createElement('div'); dn.className = 'daynav'; dn.setAttribute('role', 'group'); dn.setAttribute('aria-label', 'Jump to a day');
+    days.forEach(function (d) {
+      var b = document.createElement('button'), num = document.createElement('b'), dt = $('.date', d);
+      b.type = 'button'; num.textContent = $('b', dt).textContent; b.appendChild(num); b.appendChild(document.createTextNode($('span', dt).textContent.split('/')[0].trim().slice(0, 3)));
+      b.addEventListener('click', function () { d.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'center' }); }); dn.appendChild(b);
+    });
+    grid.parentNode.insertBefore(dn, grid);
+    var dio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (!e.isIntersecting) return; var k = days.indexOf(e.target); days.forEach(function (d, x) { d.classList.toggle('now', x === k); }); [].forEach.call(dn.children, function (b, x) { b.classList.toggle('on', x === k); }); });
+    }, { rootMargin: '-46% 0px -46% 0px' });
+    days.forEach(function (d) { dio.observe(d); });
+  }
+
+  /* phone card rails: a line that shows how far along you are */
+  $$('.sessions, .home ol').forEach(function (r) {
+    var bar = document.createElement('div'), fill = document.createElement('i'); bar.className = 'railbar'; bar.appendChild(fill); r.parentNode.insertBefore(bar, r.nextSibling);
+    var u = function () { var m = r.scrollWidth - r.clientWidth; bar.style.display = m > 4 ? '' : 'none'; fill.style.transform = 'scaleX(' + (m > 4 ? Math.max(.12, r.scrollLeft / m) : 0).toFixed(3) + ')'; };
+    r.addEventListener('scroll', function () { requestAnimationFrame(u); }, { passive: true }); window.addEventListener('resize', u); u();
+  });
+
+  /* sound: hear the bowls */
+  $$('.listen').forEach(function (b) {
+    var v = null, label = $('span', b), dot = $('i', b);
+    b.addEventListener('click', function () {
+      if (!v) { v = document.createElement('video'); v.src = b.dataset.vid; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); dot.appendChild(v); }
+      if (v.paused) { v.play().catch(function () {}); b.classList.add('playing'); label.textContent = 'Pause the bowls'; }
+      else { v.pause(); b.classList.remove('playing'); label.textContent = 'Hear the bowls'; }
+    });
+  });
+
+  /* the days until Fiji: 29 August 2027, Fiji time */
+  var un = $('#untilN');
+  if (un) { var left = Math.max(0, Math.ceil((Date.UTC(2027, 7, 28, 12, 0, 0) - Date.now()) / 864e5)); un.dataset.count = left; un.textContent = left; }
+
+  /* desktop: a ring that follows the pointer */
+  if (fine && !still) {
+    var cur = $('.ptr'), cx = window.innerWidth / 2, cy = window.innerHeight / 2, tx = cx, ty = cy;
+    root.classList.add('has-cur');
+    window.addEventListener('pointermove', function (e) {
+      if (!cur.classList.contains('live')) { cx = e.clientX; cy = e.clientY; cur.classList.add('live'); }
+      tx = e.clientX; ty = e.clientY;
+      var t = e.target && e.target.closest ? e.target.closest('a, button, .story, .flick, video') : null;
+      cur.classList.toggle('big', !!t);
+      cur.dataset.l = t && t.matches('.story') ? 'Next' : t && t.matches('.flick') ? 'Drag' : '';
+    }, { passive: true });
+    (function loop() { cx += (tx - cx) * .2; cy += (ty - cy) * .2; cur.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)'; requestAnimationFrame(loop); })();
+  }
+})();
+
 </script>
 </body>
 </html>
