@@ -334,7 +334,8 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   .fac .head, .table .head { align-items: flex-start; flex-direction: column; }
   .exp figure { order: -1; } .exp figure img { aspect-ratio: 4 / 3; } .exp figure::after { inset: 12px -10px -12px 12px; }
   .stays .head { flex-direction: column; align-items: flex-start; }
-  .stay { grid-template-columns: 1fr; } .stay img { min-height: 0; aspect-ratio: 4 / 3; }
+  .stay { display: block; } .stay img { display: block; width: 100%; height: auto; min-height: 0; aspect-ratio: 4 / 3; }
+  .stay .txt { background: rgb(var(--ink)); }
   .people li { grid-template-columns: 34px 1fr; } .people li p { grid-column: 2; }
   .sessions { grid-template-columns: 1fr; }
   .days figure { position: static; } .days figure img { aspect-ratio: 4 / 5; }
