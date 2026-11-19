@@ -223,6 +223,63 @@ h1 span { display: inline-block; opacity: 0; transform: translateY(.24em); filte
 .cine .bar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
 .cine .fine { margin-top: 18px; color: var(--mist); font-size: 14px; }
 
+
+/* value stack */
+.value .stack { margin-top: clamp(40px, 6vh, 70px); border-top: 1px solid rgba(96, 108, 124, .28); }
+.value .stack li { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 6px clamp(24px, 4vw, 64px); align-items: baseline; padding: clamp(20px, 3vh, 30px) 0; border-bottom: 1px solid rgba(96, 108, 124, .28); }
+.value .stack h3 { grid-column: 1; font-size: clamp(1.5rem, 2.1vw, 2.1rem); }
+.value .stack p { grid-column: 1; max-width: 62ch; font-size: .95em; }
+.value .stack li b { grid-row: 1; grid-column: 2; font-family: var(--display); font-weight: 400; font-size: clamp(1.9rem, 2.9vw, 3rem); line-height: 1; color: var(--slate); white-space: nowrap; text-align: right; }
+.value .stack li b small { display: block; font-family: var(--text); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 8px; }
+.value .stack li.inc b { font-family: var(--text); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--slate); padding: 9px 14px; border: 1px solid rgba(96, 108, 124, .45); align-self: start; }
+.sum { padding: clamp(30px, 4.4vw, 60px); background: var(--slate); color: var(--ivory); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 70px); align-items: center; }
+.sum .was span, .sum .now span { display: block; color: var(--sand); margin-bottom: 12px; }
+.sum .was b { font-family: var(--display); font-weight: 400; font-size: clamp(2.6rem, 4.8vw, 4.8rem); line-height: 1; color: rgba(255, 251, 243, .78); text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--sand); }
+.sum .was p { margin-top: 14px; color: var(--cream); max-width: 40ch; }
+.sum .now { border-left: 1px solid rgba(255, 251, 243, .25); padding-left: clamp(24px, 4vw, 70px); }
+.sum .now b { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(3.6rem, 7.4vw, 7.4rem); line-height: .9; color: var(--ivory); }
+.sum .now p { margin-top: 12px; color: var(--cream); max-width: 36ch; }
+.sum .now .btn { margin-top: 26px; }
+.value .after { margin-top: clamp(26px, 4vh, 44px); font-family: var(--display); font-size: clamp(1.4rem, 2.1vw, 2.1rem); line-height: 1.18; color: var(--slate); max-width: 40ch; }
+/* apply bands: a photograph, a colour fade, one line and the way in */
+.band { position: relative; padding: 0; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); min-height: clamp(380px, 64vh, 640px); background: rgb(var(--ink)); overflow: hidden; }
+.band .say { grid-column: 1; grid-row: 1; position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: clamp(22px, 3.4vh, 36px); padding: clamp(44px, 8vh, 100px) clamp(20px, 3vw, 50px) clamp(44px, 8vh, 100px) max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad))); }
+.band p { font-family: var(--display); font-size: clamp(2rem, 3.6vw, 3.8rem); line-height: 1; color: var(--ivory); max-width: 13ch; text-wrap: balance; }
+.band .pic { grid-column: 2; grid-row: 1; position: relative; margin: 0; overflow: hidden; }
+.band .pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; scale: 1.18; translate: 0 calc(var(--p, 0) * 1%); transition: scale 14s cubic-bezier(.2, .6, .2, 1); will-change: scale, translate; }
+.band.live .pic img { scale: 1.07; }
+.band .pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, rgb(var(--ink)) 0%, rgba(var(--ink), .55) 12%, rgba(var(--ink), 0) 42%); }
+.band.flip { grid-template-columns: minmax(0, 1.3fr) minmax(0, .9fr); }
+.band.flip .pic { grid-column: 1; }
+.band.flip .say { grid-column: 2; padding-left: clamp(20px, 3vw, 50px); padding-right: max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad))); }
+.band.flip .pic::after { background: linear-gradient(to left, rgb(var(--ink)) 0%, rgba(var(--ink), .55) 12%, rgba(var(--ink), 0) 42%); }
+/* the sequence: a film made of photographs */
+.seq figure { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1.8s var(--ease); }
+.seq figure.on { opacity: 1; }
+.seq img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); will-change: transform; }
+.seq figure.on img { animation: kb 8s linear forwards; }
+.seq figure:nth-child(even).on img { animation-name: kb2; }
+.seq figure:nth-child(3n).on img { animation-name: kb3; }
+@keyframes kb { from { transform: scale(1.02) translate3d(0, 0, 0); } to { transform: scale(1.14) translate3d(-1.6%, -1.2%, 0); } }
+@keyframes kb2 { from { transform: scale(1.14) translate3d(1.6%, 0, 0); } to { transform: scale(1.02) translate3d(0, 0, 0); } }
+@keyframes kb3 { from { transform: scale(1.04) translate3d(0, 1.6%, 0); } to { transform: scale(1.12) translate3d(1.2%, -1%, 0); } }
+.seq figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 90px clamp(18px, 3vw, 40px) 26px; background: linear-gradient(to top, rgba(var(--ink), .86), transparent); font-family: var(--display); font-size: clamp(1.5rem, 2.6vw, 2.6rem); line-height: 1.05; color: var(--ivory); }
+.seq figcaption small { display: block; margin-bottom: 8px; font-family: var(--text); font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--sand); }
+.seq .bars { position: absolute; left: clamp(18px, 3vw, 40px); right: clamp(18px, 3vw, 40px); top: 18px; z-index: 2; display: flex; gap: 6px; }
+.seq .bars i { flex: 1; height: 2px; background: rgba(255, 251, 243, .28); overflow: hidden; }
+.seq .bars i::after { content: ""; display: block; height: 100%; width: 0; background: var(--ivory); }
+.seq .bars i.done::after { width: 100%; }
+.seq .bars i.live::after { width: 100%; transition: width 6s linear; }
+.seq { cursor: pointer; }
+/* still photographs that breathe */
+.plate > img { scale: 1.18; translate: 0 calc(var(--p, 0) * 1%); transition: scale 14s cubic-bezier(.2, .6, .2, 1); will-change: scale, translate; }
+.plate.live > img { scale: 1.07; }
+.reel .flick figure { overflow: hidden; }
+.reel .flick figure img { transition: transform 7s cubic-bezier(.2, .6, .2, 1); transform: scale(1.08); }
+.reel .flick figure.cur img { transform: scale(1); }
+img.wipe { clip-path: inset(0 0 100% 0); transition: clip-path 1.5s var(--ease), transform 2.4s var(--ease); transform: scale(1.1); }
+img.wipe.in { clip-path: inset(0 0 0 0); transform: scale(1); }
+
 /* ───────── PROGRAM ───────── */
 .sessions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(30px, 5vw, 90px); margin-top: clamp(40px, 6vh, 70px); border-top: 1px solid rgba(213, 204, 178, .22); }
 .sessions li { display: grid; grid-template-columns: clamp(54px, 6vw, 92px) 1fr; gap: 4px 16px; padding: clamp(22px, 3.4vh, 34px) 0; border-bottom: 1px solid rgba(213, 204, 178, .22); }
@@ -332,6 +389,15 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   #facFlick { align-items: flex-start; }
   .prof .txt { justify-content: flex-start; }
   .fac .head, .table .head { align-items: flex-start; flex-direction: column; }
+  .sum { grid-template-columns: 1fr; } .sum .now { border-left: 0; padding-left: 0; border-top: 1px solid rgba(255, 251, 243, .25); padding-top: 26px; }
+  .value .stack li { grid-template-columns: 1fr; } .value .stack li b { grid-row: auto; grid-column: 1; text-align: left; justify-self: start; margin: 4px 0 6px; }
+  .cine .frame { aspect-ratio: 4 / 5; }
+  .sum .now .btn { display: block; text-align: center; white-space: nowrap; font-size: 12px; letter-spacing: .16em; padding: 19px 10px; }
+  .band, .band.flip { grid-template-columns: 1fr; min-height: 0; }
+  .band .pic, .band.flip .pic { grid-column: 1; grid-row: 1; aspect-ratio: 4 / 3; }
+  .band .say, .band.flip .say { grid-column: 1; grid-row: 2; padding: 4px var(--pad) clamp(44px, 7vh, 64px); }
+  .band .pic::after, .band.flip .pic::after { background: linear-gradient(to top, rgb(var(--ink)) 0%, rgba(var(--ink), .5) 20%, rgba(var(--ink), 0) 52%); }
+  .band p { max-width: 15ch; }
   .exp figure { order: -1; } .exp figure img { aspect-ratio: 4 / 3; } .exp figure::after { inset: 12px -10px -12px 12px; }
   .stays .head { flex-direction: column; align-items: flex-start; }
   .stay { display: block; } .stay img { display: block; width: 100%; height: auto; min-height: 0; aspect-ratio: 4 / 3; }
@@ -353,6 +419,8 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   .pair { grid-template-columns: 1fr; } .pair div + div { border-left: 0; border-top: 1px solid rgba(213, 204, 178, .3); }
   .stats b { font-size: 2.3rem; } .stats div > span { font-size: 13px; }
   .btn { padding: 18px 24px; }
+  .hero .cta { flex-wrap: wrap; } .hero .cta .btn { white-space: nowrap; } .hero .cta .btn:last-child { order: -1; flex: 1 0 100%; }
+  .enq .go .btn { display: block; width: 100%; text-align: center; white-space: nowrap; font-size: 12px; letter-spacing: .16em; padding: 20px 10px; }
   footer .top, footer .fine { flex-direction: column; align-items: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -360,6 +428,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   .veil { display: none; }
   *, *::before, *::after { animation-duration: .01s !important; animation-delay: 0s !important; transition-duration: .01s !important; }
   [data-r] { opacity: 1; transform: none; }
+  .plate > img, .band .pic img { scale: 1.07; translate: none; transition: none; } .reel .flick figure img, img.wipe { transform: none; transition: none; clip-path: none; } .seq figure.on img { animation: none; }
 }
 @media print { .grain, .veil, .orb, .ghost, .nav, .hold, .ctrl { display: none !important; } }
 </style>
@@ -379,7 +448,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         <li><a href="#faculty">Faculty</a></li>
         <li><a href="#program">Program</a></li>
         <li><a href="#days">Five days</a></li>
-        <li><a class="go" href="#enquire">Enquire</a></li>
+        <li><a class="go" href="#enquire">Apply</a></li>
       </ul>
     </nav>
   </div>
@@ -401,7 +470,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
       <div class="cta caps">
         <button class="hold" type="button" id="hold" aria-label="Pause film"></button>
         <a class="btn line" href="#stays">See the stays</a>
-        <a class="btn" href="#enquire">Enquire</a>
+        <a class="btn" href="#enquire">Apply to secure your spot</a>
       </div>
     </div>
   </div>
@@ -427,6 +496,15 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     </div>
     <figure data-r style="--d:.1s"><img src="media/sandbar-couple.jpg" alt="Two people walking a sandbar through the clear turquoise lagoon at Natadola Bay, Fiji" loading="lazy"></figure>
   </div>
+</section>
+
+<!-- APPLY BAND -->
+<section class="band flip" aria-label="Apply">
+  <div class="say">
+    <p data-r>You have carried the clinic long enough. Come and be looked after.</p>
+    <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
+  </div>
+  <figure class="pic"><img src="media/massage-close.jpg" alt="A guest with frangipani in her hair, smiling during a massage" loading="lazy" style="object-position:35% 60%"></figure>
 </section>
 
 <!-- THE SETTING -->
@@ -461,7 +539,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
           <p class="price">A$6,997</p>
           <p class="per caps">Per guest, your own room</p>
           <p>Four nights in a spacious king room with private outdoor Cleopatra bathtub. Full RESET education, hosted dining, professional photo and video assets, gifting, cultural experiences and follow-up.</p>
-          <a class="btn caps" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20-%20Garden%20View%20King%20enquiry">Enquire about Garden View</a>
+          <a class="btn caps" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20-%20Garden%20View%20King%20application">Apply for Garden View</a>
         </div>
       </article>
       <article class="stay">
@@ -472,7 +550,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
           <p class="price">A$7,997</p>
           <p class="per caps">Per guest, your own room</p>
           <p>Every inclusion of the Garden View experience, elevated with four nights in your own premium Beachfront King room overlooking Natadola Bay.</p>
-          <a class="btn caps" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20-%20Beachfront%20King%20enquiry">Enquire about Beachfront</a>
+          <a class="btn caps" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20-%20Beachfront%20King%20application">Apply for Beachfront</a>
         </div>
       </article>
     </div>
@@ -596,6 +674,15 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   </div>
 </section>
 
+<!-- APPLY BAND -->
+<section class="band flip" aria-label="Apply">
+  <div class="say">
+    <p data-r>The best conversations happen between sessions.</p>
+    <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
+  </div>
+  <figure class="pic"><img src="media/beach-selfie.jpg" alt="Two guests taking a photograph with a member of the resort team on the beach" loading="lazy" style="object-position:50% 64%"></figure>
+</section>
+
 <!-- PLATE: boutique -->
 <section class="plate quote" aria-label="A boutique group">
   <img src="media/aerial-bay.jpg" alt="The sweep of Natadola Bay from the air, with the resort on its point and the river beyond" loading="lazy">
@@ -625,6 +712,15 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
       <li data-r><b>08</b><h3>Your 90-day RESET</h3><p>Prioritise your next steps with actions, milestones and numbers to monitor.</p></li>
     </ol>
   </div>
+</section>
+
+<!-- APPLY BAND -->
+<section class="band" aria-label="Apply">
+  <div class="say">
+    <p data-r>Leave with the plan already made.</p>
+    <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
+  </div>
+  <figure class="pic"><img src="media/coconut.jpg" alt="A fresh coconut with fruit and a paper umbrella held over the pool" loading="lazy" style="object-position:60% 50%"></figure>
 </section>
 
 <!-- PHOTO + VIDEO -->
@@ -711,12 +807,11 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         <h2 data-r style="--d:.05s">Fire, flowers and long tables.</h2>
         <p class="lede" data-r style="--d:.1s">Three hosted dinners, three education lunches and breakfast every morning are part of your RESET.</p>
       </div>
-      <div class="ctrl caps" data-ctrl="foodFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 7</span><button class="next" type="button" aria-label="Next photograph"></button></div>
+      <div class="ctrl caps" data-ctrl="foodFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 6</span><button class="next" type="button" aria-label="Next photograph"></button></div>
     </div>
     <div class="reel" style="margin-top:0" data-r>
       <div class="flick" id="foodFlick" tabindex="0" aria-label="Photographs of dining at the resort, one at a time">
         <figure><img src="media/dine-fire-buffet.jpg" alt="A buffet of seafood and grilled dishes beside an open fire at dusk" loading="lazy"><figcaption class="caps">Cooked over open fire</figcaption></figure>
-        <figure><img src="media/dine-long-table.jpg" alt="A long table set with tropical flowers and glassware on a terrace, a chef at the buffet behind" loading="lazy"><figcaption class="caps">A long table, set for the evening</figcaption></figure>
         <figure><img src="media/dine-bowls.jpg" alt="Fresh salads served in carved wooden bowls on a buffet" loading="lazy"><figcaption class="caps">Sharing bowls</figcaption></figure>
         <figure><img src="media/dine-chef.jpg" alt="A resort chef in whites cooking at an outdoor station among red flowers" loading="lazy"><figcaption class="caps">The resort's chefs</figcaption></figure>
         <figure><img src="media/dine-cocktails.jpg" alt="A bartender straining a cocktail into salt-rimmed glasses" loading="lazy"><figcaption class="caps">Shaken to order</figcaption></figure>
@@ -726,6 +821,15 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
       <p class="fine">Resort photography, shown as a guide to dining at InterContinental Fiji.</p>
     </div>
   </div>
+</section>
+
+<!-- APPLY BAND -->
+<section class="band flip" aria-label="Apply">
+  <div class="say">
+    <p data-r>Your seat at the long table is waiting.</p>
+    <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
+  </div>
+  <figure class="pic"><img src="media/dine-long-table.jpg" alt="A long table set with tropical flowers and glassware on a terrace, a chef at the buffet behind" loading="lazy" style="object-position:50% 60%"></figure>
 </section>
 
 <!-- TAKE-HOME -->
@@ -748,6 +852,15 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     </ol>
     <p class="close" data-r>Come home with momentum. The luxury of RESET is having the space, guidance and support to make meaningful progress on the business you are building.</p>
   </div>
+</section>
+
+<!-- APPLY BAND -->
+<section class="band" aria-label="Apply">
+  <div class="say">
+    <p data-r>Places are limited by design.</p>
+    <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
+  </div>
+  <figure class="pic"><img src="media/spa-pool-back.jpg" alt="A guest resting in the spa's vitality pool, facing the rainforest garden" loading="lazy" style="object-position:50% 55%"></figure>
 </section>
 
 <!-- PLATE: the point -->
@@ -782,41 +895,49 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
 
     <div class="cine" data-r>
       <div class="bar">
-        <p class="caps" style="color:var(--sand)">Stillness, food and connection</p>
-        <button class="hold" type="button" id="cineHold" aria-label="Pause film"></button>
+        <p class="caps" style="color:var(--sand)">Five days, in pictures</p>
+        <button class="hold" type="button" id="seqHold" aria-label="Pause the pictures"></button>
       </div>
-      <div class="frame"><video id="cineFilm" muted playsinline loop preload="none" poster="media/experience-poster.jpg" data-src="media/experience-film.mp4" aria-label="A silent film: rippling water, spa treatments, dishes cooked over fire, a long table set for dinner, torch bearers at dusk, a circle of people floating in a pool, and a sunrise"></video></div>
-      <p class="fine">Some footage is from an earlier retreat, shown to give a feel for the experience. Spa and dining photography courtesy of InterContinental Fiji.</p>
+      <div class="frame seq" id="seq" aria-label="A sequence of photographs of the resort, changing every few seconds">
+        <div class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <figure class="on"><img src="media/culture-torch-walk.jpg" alt="Two Fijian torch bearers in traditional dress walking the lagoon shore at dusk" loading="lazy"><figcaption><small>Dusk</small>The torches are lit along the shore.</figcaption></figure>
+        <figure><img src="media/spa-sauna.jpg" alt="A guest resting in a warmly lit sauna, seen through tropical leaves" loading="lazy"><figcaption><small>Stillness</small>An hour that belongs only to you.</figcaption></figure>
+        <figure><img src="media/infinity-pool.jpg" alt="The hilltop infinity pool looking over the resort rooftops to the ocean" loading="lazy"><figcaption><small>Above the bay</small>The hilltop pool, looking out over the bay.</figcaption></figure>
+        <figure><img src="media/room-lounge.jpg" alt="A king room lounge at InterContinental Fiji opening to a terrace" loading="lazy"><figcaption><small>Your room</small>Your own sanctuary for four nights.</figcaption></figure>
+        <figure><img src="media/sandbar-boat.jpg" alt="A boat pulled up on the sandbar in the lagoon, jet skis passing behind" loading="lazy"><figcaption><small>The lagoon</small>A sandbar in clear water, between sessions.</figcaption></figure>
+        <figure><img src="media/culture-fire-dance.jpg" alt="Fire dancers spinning rings of flame on the beach at night" loading="lazy"><figcaption><small>After dark</small>Fire on the beach.</figcaption></figure>
+        <figure><img src="media/room-bed.jpg" alt="A king bed dressed in white linen in a room at InterContinental Fiji" loading="lazy"><figcaption><small>Rest</small>White linen, and nowhere to be.</figcaption></figure>
+        <figure><img src="media/snorkel.jpg" alt="Two snorkellers among striped reef fish in clear water" loading="lazy"><figcaption><small>The reef</small>Then the reef, if you feel like it.</figcaption></figure>
+      </div>
     </div>
 
     <div class="reel" data-r>
       <div class="bar">
         <p class="caps" style="color:var(--sand)">The resort, in your own time</p>
-        <div class="ctrl caps" data-ctrl="reelFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 18</span><button class="next" type="button" aria-label="Next photograph"></button></div>
+        <div class="ctrl caps" data-ctrl="reelFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 8</span><button class="next" type="button" aria-label="Next photograph"></button></div>
       </div>
       <div class="flick" id="reelFlick" tabindex="0" aria-label="Photographs of the resort and its people, one at a time">
-        <figure><img src="media/spa-pool-back.jpg" alt="A guest resting in the spa's vitality pool, facing the rainforest garden" loading="lazy"><figcaption class="caps">The spa garden</figcaption></figure>
-        <figure><img src="media/infinity-pool.jpg" alt="The hilltop infinity pool looking over the resort rooftops to the ocean" loading="lazy"><figcaption class="caps">The hilltop infinity pool</figcaption></figure>
-        <figure><img src="media/sandbar-boat.jpg" alt="A boat pulled up on the sandbar in the lagoon, jet skis passing behind" loading="lazy"><figcaption class="caps">The sandbar</figcaption></figure>
         <figure><img src="media/massage-twin.jpg" alt="Two therapists giving massages side by side in a sunlit spa suite" loading="lazy"><figcaption class="caps">The resort spa</figcaption></figure>
-        <figure><img src="media/coconut.jpg" alt="A fresh coconut with fruit and a paper umbrella held over the pool" loading="lazy"><figcaption class="caps">By the pool</figcaption></figure>
-        <figure><img src="media/spa-pool-step.jpg" alt="A guest stepping into the spa's vitality pool, framed by palms" loading="lazy"><figcaption class="caps">The vitality pool</figcaption></figure>
-        <figure><img src="media/snorkel.jpg" alt="Two snorkellers among striped reef fish in clear water" loading="lazy"><figcaption class="caps">The reef</figcaption></figure>
         <figure><img src="media/massage-smile.jpg" alt="A smiling spa therapist giving a back massage" loading="lazy"><figcaption class="caps">Fijian warmth</figcaption></figure>
-        <figure><img src="media/steam.jpg" alt="Two guests laughing in the spa steam room" loading="lazy"><figcaption class="caps">The steam room</figcaption></figure>
-        <figure><img src="media/massage-close.jpg" alt="A guest with frangipani in her hair, smiling during a massage" loading="lazy"><figcaption class="caps">Time to exhale</figcaption></figure>
         <figure><img src="media/spa-pool-front.jpg" alt="A guest walking through the vitality pool beside a stone wall and palms" loading="lazy"><figcaption class="caps">Moments of stillness</figcaption></figure>
-        <figure><img src="media/culture-torch-walk.jpg" alt="Two Fijian torch bearers in traditional dress walking the lagoon shore at dusk" loading="lazy"><figcaption class="caps">The evening torch lighting</figcaption></figure>
-        <figure><img src="media/culture-fire-dance.jpg" alt="Fire dancers spinning rings of flame on the beach at night" loading="lazy"><figcaption class="caps">Fire on the beach</figcaption></figure>
         <figure><img src="media/culture-warriors.jpg" alt="Two Fijian men in traditional dress laughing together, one holding a lit torch, the resort behind" loading="lazy"><figcaption class="caps">A Fijian welcome</figcaption></figure>
         <figure><img src="media/spa-garden-shower.jpg" alt="A guest at the spa's outdoor garden shower among palms" loading="lazy"><figcaption class="caps">The spa garden shower</figcaption></figure>
         <figure><img src="media/spa-sauna-tall.jpg" alt="A guest resting in a warmly lit sauna framed by tropical leaves" loading="lazy"><figcaption class="caps">The sauna</figcaption></figure>
         <figure><img src="media/pool-service.jpg" alt="A waiter handing a cocktail to a guest on a sun lounger by the pool" loading="lazy"><figcaption class="caps">Poolside</figcaption></figure>
-        <figure><img src="media/beach-selfie.jpg" alt="Two guests taking a photograph with a member of the resort team on the beach" loading="lazy"><figcaption class="caps">The people you meet</figcaption></figure>
+        <figure><img src="media/steam.jpg" alt="Two guests laughing in the spa steam room" loading="lazy"><figcaption class="caps">The steam room</figcaption></figure>
       </div>
       <p class="fine">Resort spa treatments and optional activities are booked separately.</p>
     </div>
   </div>
+</section>
+
+<!-- APPLY BAND -->
+<section class="band flip" aria-label="Apply">
+  <div class="say">
+    <p data-r>Give yourself the five days.</p>
+    <a class="btn caps" href="#enquire" data-r style="--d:.1s">Apply to secure your spot</a>
+  </div>
+  <figure class="pic"><img src="media/spa-pool-step.jpg" alt="A guest stepping into the spa's vitality pool, framed by palms" loading="lazy" style="object-position:50% 50%"></figure>
 </section>
 
 <!-- VALUE -->
@@ -827,13 +948,23 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     <div class="kicker caps" data-r><i></i><span>A premium experience, inside &amp; out</span></div>
     <h2 data-r style="--d:.05s">Imagine booking all of this separately.</h2>
     <p class="lede" data-r style="--d:.1s">Professional visual content. Specialist education. Private connections. A luxury Fiji escape. RESET brings them into one exceptional experience.</p>
-    <ul>
-      <li data-r><span class="caps">Professional brand photography + video</span><b>A$1,350 - A$3,500+</b><p>Australian photo-and-video branding packages are advertised across this range and higher, depending on shoot length, edits and creative deliverables. At RESET, professional photos and video assets form part of your experience.</p></li>
-      <li data-r><span class="caps">Specialist marketing and content training</span><b>A$560 - A$1,395</b><p>Published Australian full-day marketing and AI-content courses span this range. RESET combines strategy with workshops that help you create systems, content and an action plan for your own clinic.</p></li>
-      <li data-r><span class="caps">One-day industry education</span><b>A$695 - A$1,400</b><p>Some Australian professional conferences and specialist day workshops fall within this range. Here you receive two full business education days, one focused half-day and boutique access to a seven-person faculty.</p></li>
-    </ul>
-    <p class="more" data-r>And your RESET includes so much more: four nights of five-star accommodation, hosted dinners and selected beverages, three education lunches, personal brand content, Fijian experiences, wellness, thoughtful gifts and a 30-day accountability catch-up.</p>
-    <p class="fine">Indicative Australian market comparisons only - not prices previously charged by RESET or equivalent quotes for individual delegate services. Package scopes vary. Examples: 3L Photography, Vidsta, University of Sydney CCE, SMK Training, CultureCon and ACAM.</p>
+    <ol class="stack">
+      <li data-r><h3>Two full education days and a focused half-day</h3><b><small>Up to</small>A$3,500</b><p>Some Australian professional conferences and specialist day workshops run from A$695 to A$1,400 a day. RESET gives you two and a half days, with boutique access to a seven-person faculty.</p></li>
+      <li data-r><h3>Professional brand photography and video</h3><b><small>Up to</small>A$3,500</b><p>Australian photo-and-video branding packages are advertised from A$1,350 to A$3,500 and higher. Yours are captured at Natadola Bay.</p></li>
+      <li data-r><h3>Specialist marketing and content training</h3><b><small>Up to</small>A$1,395</b><p>Published Australian full-day marketing and AI-content courses run from A$560 to A$1,395. Here you build the system, the content and the plan for your own clinic.</p></li>
+      <li class="inc" data-r><h3>Four nights of five-star accommodation</h3><b>Included</b><p>Your own king room at InterContinental Fiji Golf Resort &amp; Spa, with breakfast every morning.</p></li>
+      <li class="inc" data-r><h3>Three hosted dinners</h3><b>Included</b><p>The Welcome Dinner, the Mastermind Dinner and a private beachfront long table, each with selected beverages.</p></li>
+      <li class="inc" data-r><h3>Three lunches and daily refreshments</h3><b>Included</b><p>Looked after through every education day.</p></li>
+      <li class="inc" data-r><h3>Breathwork, sound healing and Fijian cultural experiences</h3><b>Included</b><p>Guided sessions with Jack Lombardi, cultural moments and curated retreat gifts.</p></li>
+      <li class="inc" data-r><h3>Your take-home tools and 90-day RESET plan</h3><b>Included</b><p>KPI scorecard, content planner, team growth plan, client journey map and your next 90 days.</p></li>
+      <li class="inc" data-r><h3>30-day group accountability catch-up</h3><b>Included</b><p>A live session after Fiji to review progress and keep moving.</p></li>
+    </ol>
+    <div class="sum" data-r>
+      <div class="was"><span class="caps">The education and content alone, booked separately</span><b>Up to A$8,395</b><p>That is before a single night at the resort, a dinner or a session by the water.</p></div>
+      <div class="now"><span class="caps">Your complete RESET, all of it</span><b>A$6,997</b><p>Per guest, in your own Garden View King room. Beachfront King A$7,997.</p><a class="btn caps" href="#enquire">Apply to secure your spot</a></div>
+    </div>
+    <p class="after" data-r>Booked separately, the education and content alone could cost more than your whole RESET. Four nights in Fiji, every hosted dinner and everything else on this page come with it.</p>
+    <p class="fine">Indicative Australian market comparisons only, using the upper end of each published range - not prices previously charged by RESET or equivalent quotes for individual delegate services. Package scopes vary. Examples: 3L Photography, Vidsta, University of Sydney CCE, SMK Training, CultureCon and ACAM.</p>
   </div>
 </section>
 
@@ -864,8 +995,8 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
 
     <div class="go" data-r>
       <p class="caps" style="color:var(--sand)">Limited places</p>
-      <a class="btn caps" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20enquiry">Enquire to secure your RESET</a>
-      <a class="mail" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20enquiry">nicole@aestheticcoach.com.au</a>
+      <a class="btn caps" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20application">Apply to secure your spot</a>
+      <a class="mail" href="mailto:nicole@aestheticcoach.com.au?subject=RESET%20Fiji%202027%20application">nicole@aestheticcoach.com.au</a>
     </div>
     <p class="fine">Flights, visas or visa-related fees (where required), airport transfers, personal expenses and any separately booked optional activities are not included. Booking conditions apply.</p>
   </div>
@@ -882,7 +1013,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         <li><a href="#faculty">Faculty</a></li>
         <li><a href="#program">Program</a></li>
         <li><a href="#days">Five days</a></li>
-        <li><a href="#enquire">Enquire</a></li>
+        <li><a href="#enquire">Apply</a></li>
       </ul>
     </div>
     <div class="fine"><span>RESET Fiji 2027, by Aesthetic Business Masters</span><span>Resort photography and film courtesy of InterContinental Fiji Golf Resort &amp; Spa</span></div>
@@ -951,20 +1082,55 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     f.addEventListener('scroll', function () { f.querySelectorAll('video').forEach(function (v) { var r = v.getBoundingClientRect(), fr = f.getBoundingClientRect(); if (r.right < fr.left + 40 || r.left > fr.right - 40) v.pause(); }); }, { passive: true });
   });
 
-  /* the experience film: loads when near, plays in view, pauses on request */
-  var cine = document.getElementById('cineFilm'), cineHold = document.getElementById('cineHold'), cinePaused = still;
-  function setCine() { cineHold.classList.toggle('paused', cine.paused); cineHold.setAttribute('aria-label', cine.paused ? 'Play film' : 'Pause film'); }
-  cine.addEventListener('play', setCine); cine.addEventListener('pause', setCine);
-  cineHold.addEventListener('click', function () {
-    if (!cine.src) cine.src = cine.dataset.src;
-    if (cine.paused) { cinePaused = false; cine.play().catch(function () {}); } else { cinePaused = true; cine.pause(); }
-  });
-  setCine();
-  new IntersectionObserver(function (es) {
-    es.forEach(function (e) {
-      if (e.isIntersecting) { if (!cinePaused) { if (!cine.src) cine.src = cine.dataset.src; cine.play().catch(function () {}); } } else cine.pause();
+  /* the sequence: photographs that move like film */
+  (function () {
+    var seq = document.getElementById('seq'), hold = document.getElementById('seqHold'); if (!seq) return;
+    var figs = seq.querySelectorAll('figure'), bars = seq.querySelectorAll('.bars i'), i = 0, timer = null, paused = still, seen = false;
+    function paint() {
+      figs.forEach(function (f, n) { f.classList.toggle('on', n === i); });
+      bars.forEach(function (b, n) { b.classList.remove('live'); b.classList.toggle('done', n < i); });
+      if (!paused && seen) requestAnimationFrame(function () { requestAnimationFrame(function () { bars[i].classList.add('live'); }); });
+    }
+    function next() { i = (i + 1) % figs.length; paint(); }
+    function run() { clearInterval(timer); if (!paused && seen) timer = setInterval(next, 6000); paint(); hold.classList.toggle('paused', paused); hold.setAttribute('aria-label', paused ? 'Play the pictures' : 'Pause the pictures'); }
+    hold.addEventListener('click', function () { paused = !paused; run(); });
+    seq.addEventListener('click', function () { next(); run(); });
+    new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; run(); }); }, { threshold: .3 }).observe(seq);
+    run();
+  })();
+
+  /* still photographs that breathe: plates and bands settle and drift, pictures wipe open, carousels play themselves */
+  var live = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('live', e.isIntersecting); }); }, { threshold: .12 });
+  document.querySelectorAll('.plate, .band').forEach(function (p) { live.observe(p); });
+  var par = [].slice.call(document.querySelectorAll('.plate > img, .band .pic img')), tick = false;
+  function drift() {
+    tick = false; var vh = window.innerHeight;
+    par.forEach(function (im) {
+      var r = im.parentNode.getBoundingClientRect(); if (r.bottom < -80 || r.top > vh + 80) return;
+      var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
+      im.style.setProperty('--p', (Math.max(-1, Math.min(1, p)) * -3).toFixed(2));
     });
-  }, { threshold: .25 }).observe(cine);
+  }
+  if (!still) { window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(drift); } }, { passive: true }); drift(); }
+  document.querySelectorAll('.exp figure img, .days figure img, .incl > img, .brand .grid > img').forEach(function (im) {
+    im.classList.add('wipe');
+    new IntersectionObserver(function (es, o) { es.forEach(function (e) { if (e.isIntersecting) { im.classList.add('in'); o.disconnect(); } }); }, { threshold: .2 }).observe(im);
+  });
+  document.querySelectorAll('.reel .flick').forEach(function (f) {
+    var auto = !still, seen = false, timer = null;
+    function cur() { var n = Math.round(f.scrollLeft / f.clientWidth); [].forEach.call(f.children, function (c, k) { c.classList.toggle('cur', k === n); }); }
+    function step() {
+      if (!auto || !seen) return;
+      var n = Math.round(f.scrollLeft / f.clientWidth), k = (n + 1) % f.children.length;
+      f.scrollTo({ left: k * f.clientWidth, behavior: k ? 'smooth' : 'auto' });
+    }
+    function stop() { auto = false; clearInterval(timer); }
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (ev) { f.addEventListener(ev, stop, { passive: true }); });
+    var c = document.querySelector('[data-ctrl="' + f.id + '"]'); if (c) c.addEventListener('click', stop);
+    new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; }); }, { threshold: .5 }).observe(f);
+    f.addEventListener('scroll', function () { requestAnimationFrame(cur); }, { passive: true }); cur();
+    if (auto) timer = setInterval(step, 5200);
+  });
 
   /* flick carousels: one at a time, by swipe, arrow buttons or arrow keys */
   document.querySelectorAll('[data-ctrl]').forEach(function (c) {
