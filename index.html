@@ -768,6 +768,12 @@ h2.sp.in .w > span { transform: none; }
 @keyframes hgShim { 0%, 60% { transform: skewX(-16deg) translateX(-120px); opacity: 0; } 66% { opacity: 1; } 92% { opacity: 1; } 100% { transform: skewX(-16deg) translateX(900px); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .hg .flow, .hg .fall circle, .hg .roll circle, .hg .sink circle, .hg .shim { animation: none; opacity: 0; } }
 
+
+/* the clock is live: a hairline fills through each minute */
+.secline { width: min(300px, 62vw); height: 1px; background: rgba(213, 204, 178, .26); overflow: hidden; }
+.secline i { display: block; height: 100%; background: var(--sand); transform-origin: 0 50%; transform: scaleX(0); transition: transform 1s linear; }
+.until > p span { display: block; margin-top: 7px; color: var(--mist); letter-spacing: .2em; font-size: 11px; }
+
 </style>
 </head>
 <body>
@@ -1367,7 +1373,8 @@ h2.sp.in .w > span { transform: none; }
         <div><b id="cdH">00</b><span class="caps">hours</span></div><i aria-hidden="true">:</i>
         <div><b id="cdM">00</b><span class="caps">minutes</span></div>
       </div>
-      <p class="caps">until we meet in Fiji</p>
+      <div class="secline" aria-hidden="true"><i id="cdS"></i></div>
+      <p class="caps">until we meet in Fiji<span>Sunday 29 August 2027</span></p>
     </div>
 
     <div class="go" data-r>
@@ -1764,13 +1771,17 @@ h2.sp.in .w > span { transform: none; }
     });
   });
 
-  /* the countdown to 29 August 2027, Fiji time, kept to the minute */
-  var cdD = $('#cdD'), cdH = $('#cdH'), cdM = $('#cdM');
+  /* a live countdown from the visitor's clock to midnight on 29 August 2027 in Fiji (UTC+12), shown to the minute */
+  var cdD = $('#cdD'), cdH = $('#cdH'), cdM = $('#cdM'), cdS = $('#cdS');
   if (cdD && cdH && cdM) {
     var target = Date.UTC(2027, 7, 28, 12, 0, 0);
     var put = function (el, v) { if (el.textContent === v) return; el.textContent = v; el.classList.toggle('roll', false); void el.offsetWidth; el.classList.toggle('roll', true); };
-    var tickClock = function () { var mins = Math.floor(Math.max(0, target - Date.now()) / 6e4); put(cdD, String(Math.floor(mins / 1440))); put(cdH, pad(Math.floor(mins % 1440 / 60))); put(cdM, pad(mins % 60)); };
-    tickClock(); setInterval(tickClock, 5000);
+    var tickClock = function () {
+      var ms = Math.max(0, target - Date.now()), mins = Math.floor(ms / 6e4);
+      put(cdD, String(Math.floor(mins / 1440))); put(cdH, pad(Math.floor(mins % 1440 / 60))); put(cdM, pad(mins % 60));
+      if (cdS) { var into = ms > 0 ? 1 - (ms % 6e4) / 6e4 : 1; cdS.style.transitionDuration = into < .03 ? '0s' : '1s'; cdS.style.transform = 'scaleX(' + into.toFixed(4) + ')'; }
+    };
+    tickClock(); setInterval(tickClock, 1000);
   }
 
   /* desktop: a ring that follows the pointer */
