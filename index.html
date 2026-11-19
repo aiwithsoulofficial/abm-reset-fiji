@@ -728,23 +728,28 @@ h2.sp.in .w > span { transform: none; }
 .clock b.roll { animation: roll .8s var(--ease); }
 @keyframes blink { 50% { opacity: .22; } }
 @keyframes roll { from { opacity: 0; transform: translateY(38%); } }
-.glass { width: clamp(50px, 5.2vw, 66px); height: auto; overflow: visible; }
-.glass .outline, .glass .rim { fill: none; stroke: var(--ivory); stroke-width: 1.2; stroke-linecap: square; }
-.glass .rim { stroke-width: 2.2; }
-.glass .sand-top, .glass .sand-bot { fill: var(--sand); transform-box: fill-box; transform-origin: 50% 100%; }
-.glass .sand-top { animation: drain 10s linear infinite; }
-.glass .sand-bot { animation: heap 10s linear infinite; }
-.glass .sand-fall { stroke: var(--sand); stroke-width: 1.5; stroke-dasharray: 2 3; animation: grains .45s linear infinite, pour 10s linear infinite; }
-.glass .flip { transform-box: view-box; transform-origin: 50% 50%; animation: flip 10s cubic-bezier(.65, 0, .2, 1) infinite; }
-@keyframes drain { 0% { transform: scaleY(1); } 84%, 100% { transform: scaleY(0); } }
-@keyframes heap { 0% { transform: scaleY(0); } 84%, 100% { transform: scaleY(1); } }
-@keyframes grains { to { stroke-dashoffset: -5; } }
-@keyframes pour { 0%, 82% { opacity: 1; } 84%, 100% { opacity: 0; } }
-@keyframes flip { 0%, 87% { transform: rotate(0deg); } 100% { transform: rotate(180deg); } }
+.glass { width: clamp(88px, 9vw, 118px); height: auto; overflow: visible; margin-bottom: 4px; }
+.glass .hg-flip { transform-box: view-box; transform-origin: 60px 92px; animation: hgFlip 12s cubic-bezier(.62, -.12, .22, 1.1) infinite; }
+.glass .hg-sand-top { animation: hgDrain 12s linear infinite; }
+.glass .hg-sand-bot { animation: hgHeap 12s linear infinite; }
+.glass .hg-fall { stroke-width: 1.25; stroke-dasharray: .5 2.3; animation: hgGrains .36s linear infinite, hgPour 12s linear infinite; }
+.glass .hg-shadow { transform-box: fill-box; transform-origin: 50% 50%; animation: hgShadow 12s ease-in-out infinite; }
+@keyframes hgDrain { 0% { transform: translateY(0); } 80%, 100% { transform: translateY(84px); } }
+@keyframes hgHeap { 0% { transform: translateY(0); } 80%, 100% { transform: translateY(-92px); } }
+@keyframes hgGrains { to { stroke-dashoffset: -2.8; } }
+@keyframes hgPour { 0%, 78% { opacity: 1; } 80%, 100% { opacity: 0; } }
+@keyframes hgFlip { 0%, 85% { transform: rotate(0deg); } 100% { transform: rotate(180deg); } }
+@keyframes hgShadow { 0%, 85%, 100% { transform: scaleX(1); opacity: .55; } 92.5% { transform: scaleX(.42); opacity: .3; } }
 @media (prefers-reduced-motion: reduce) {
-  .glass .sand-top, .glass .sand-bot { animation: none; transform: scaleY(.5); }
-  .glass .sand-fall, .glass .flip, .clock i { animation: none; }
+  .glass .hg-flip, .glass .hg-fall, .glass .hg-shadow, .clock i { animation: none; }
+  .glass .hg-sand-top { animation: none; transform: translateY(34px); }
+  .glass .hg-sand-bot { animation: none; transform: translateY(-34px); }
 }
+
+
+/* the seal on a join never sits under a button: bands that carry one keep clear space beneath */
+@media (max-width: 900px) { .band.to-light .say { padding-bottom: 112px; } }
+@media (min-width: 901px) { .band.to-light .say { padding-bottom: calc(clamp(128px, 15vw, 196px) / 2 + 34px); } }
 
 </style>
 </head>
@@ -1326,17 +1331,35 @@ h2.sp.in .w > span { transform: none; }
     </ul>
 
     <div class="until" data-r role="timer" aria-label="Time until RESET begins in Fiji on 29 August 2027">
-      <svg class="glass" viewBox="0 0 64 96" aria-hidden="true">
+      <svg class="glass" viewBox="0 0 120 190" aria-hidden="true">
         <defs>
-          <clipPath id="glassTop"><path d="M13,10 H51 C51,30 35,38 33,47 H31 C29,38 13,30 13,10 Z"/></clipPath>
-          <clipPath id="glassBot"><path d="M31,49 H33 C35,58 51,66 51,86 H13 C13,66 29,58 31,49 Z"/></clipPath>
+          <linearGradient id="hgBrass" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#6f6850"/><stop offset=".18" stop-color="#b3a987"/><stop offset=".5" stop-color="#f6efd9"/><stop offset=".82" stop-color="#b3a987"/><stop offset="1" stop-color="#6f6850"/></linearGradient>
+          <linearGradient id="hgBand" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3d3a2c" stop-opacity=".55"/><stop offset=".5" stop-color="#3d3a2c" stop-opacity="0"/><stop offset="1" stop-color="#3d3a2c" stop-opacity=".55"/></linearGradient>
+          <linearGradient id="hgPost" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#5f5942"/><stop offset=".5" stop-color="#f3ecd6"/><stop offset="1" stop-color="#5f5942"/></linearGradient>
+          <linearGradient id="hgGlass" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#b7c2c8" stop-opacity=".34"/><stop offset=".22" stop-color="#fffbf3" stop-opacity=".1"/><stop offset=".5" stop-color="#fffbf3" stop-opacity=".03"/><stop offset=".78" stop-color="#fffbf3" stop-opacity=".1"/><stop offset="1" stop-color="#b7c2c8" stop-opacity=".34"/></linearGradient>
+          <linearGradient id="hgSand" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#a99d7b"/><stop offset=".45" stop-color="#eee5cb"/><stop offset=".6" stop-color="#e3d9bd"/><stop offset="1" stop-color="#a2966f"/></linearGradient>
+          <linearGradient id="hgShine" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <linearGradient id="hgShineUp" x1="0" x2="0" y1="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <filter id="hgGrain" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="1.7" numOctaves="2" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .36  0 0 0 0 .32  0 0 0 0 .22  0 0 0 -1.5 .78" result="k"/><feComposite in="k" in2="SourceGraphic" operator="in" result="g"/><feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="g"/></feMerge></filter>
+          <filter id="hgSoft" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="3.2"/></filter>
+          <clipPath id="hgTop"><path d="M33,22.5 H87 C87,52 65.5,74 62.4,88 L60,92 L57.6,88 C54.5,74 33,52 33,22.5 Z"/></clipPath>
+          <clipPath id="hgBot"><path d="M60,92 L62.4,96 C65.5,110 87,132 87,161.5 H33 C33,132 54.5,110 57.6,96 Z"/></clipPath>
         </defs>
-        <g class="flip">
-          <g clip-path="url(#glassTop)"><rect class="sand-top" x="13" y="10" width="38" height="38"/></g>
-          <line class="sand-fall" x1="32" y1="47" x2="32" y2="86"/>
-          <g clip-path="url(#glassBot)"><rect class="sand-bot" x="13" y="48" width="38" height="38"/></g>
-          <path class="rim" d="M8,6 H56 M8,90 H56"/>
-          <path class="outline" d="M12,6 V10 C12,30 28,38 30.5,47 V49 C28,58 12,66 12,86 V90 M52,6 V10 C52,30 36,38 33.5,47 V49 C36,58 52,66 52,86 V90"/>
+        <ellipse class="hg-shadow" cx="60" cy="181" rx="47" ry="4.6" fill="#05080d" opacity=".55" filter="url(#hgSoft)"/>
+        <g class="hg-flip">
+          <rect x="19" y="20" width="5" height="144" fill="url(#hgPost)"/><rect x="96" y="20" width="5" height="144" fill="url(#hgPost)"/>
+          <rect x="17.6" y="86" width="7.8" height="12" rx="1.2" fill="url(#hgPost)"/><rect x="94.6" y="86" width="7.8" height="12" rx="1.2" fill="url(#hgPost)"/>
+          <g clip-path="url(#hgTop)" filter="url(#hgGrain)"><path class="hg-sand-top" d="M20,10 L60,20 L100,10 V200 H20 Z" fill="url(#hgSand)"/></g>
+          <line class="hg-fall" x1="60" y1="90" x2="60" y2="162" stroke="#e6dcc0" stroke-width="1.5" stroke-linecap="round"/>
+          <g clip-path="url(#hgBot)" filter="url(#hgGrain)"><path class="hg-sand-bot" d="M20,176 Q60,152 100,176 V280 H20 Z" fill="url(#hgSand)"/></g>
+          <path d="M32,22 H88 C88,52 66,74 63,88 V96 C66,110 88,132 88,162 H32 C32,132 54,110 57,96 V88 C54,74 32,52 32,22 Z" fill="url(#hgGlass)" stroke="#fffbf3" stroke-opacity=".62" stroke-width="1.1"/>
+          <path d="M37.5,27 C38,47 49,65 55.5,80" fill="none" stroke="url(#hgShine)" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M82.5,157 C82,137 71,119 64.5,104" fill="none" stroke="url(#hgShineUp)" stroke-width="2.4" stroke-linecap="round"/>
+          <ellipse cx="43" cy="31" rx="1.6" ry="3.4" fill="#fff" opacity=".6" transform="rotate(-18 43 31)"/><ellipse cx="77" cy="153" rx="1.6" ry="3.4" fill="#fff" opacity=".6" transform="rotate(-18 77 153)"/>
+          <rect x="14" y="8" width="92" height="9" rx="1.4" fill="url(#hgBrass)"/><rect x="14" y="8" width="92" height="9" rx="1.4" fill="url(#hgBand)"/>
+          <rect x="25" y="17" width="70" height="5.4" fill="url(#hgBrass)"/><rect x="25" y="17" width="70" height="5.4" fill="url(#hgBand)"/>
+          <rect x="25" y="161.6" width="70" height="5.4" fill="url(#hgBrass)"/><rect x="25" y="161.6" width="70" height="5.4" fill="url(#hgBand)"/>
+          <rect x="14" y="167" width="92" height="9" rx="1.4" fill="url(#hgBrass)"/><rect x="14" y="167" width="92" height="9" rx="1.4" fill="url(#hgBand)"/>
         </g>
       </svg>
       <div class="clock">
