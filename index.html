@@ -582,7 +582,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         </div>
       </article>
       <article class="prof">
-        <figure class="port ph"><div><b aria-hidden="true">JL</b><span class="caps">Portrait to come</span></div></figure>
+        <figure class="port"><img src="media/fac-jack.jpg" style="object-position:50% 50%" alt="Crystal singing bowls glowing in violet light, a hand circling the rim of one" loading="lazy"><button class="play caps" type="button" data-vid="media/fac-jack.mp4" data-loop="1">Hear Jack play</button></figure>
         <div class="txt">
           <p class="no caps">07 / Breathwork and sound</p>
           <h3>Jack Lombardi</h3>
@@ -942,7 +942,7 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   /* faculty clips: the portrait becomes the film, with sound, when asked */
   document.querySelectorAll('.port .play').forEach(function (b) {
     b.addEventListener('click', function () {
-      var v = document.createElement('video'); v.src = b.dataset.vid; v.controls = true; v.playsInline = true;
+      var v = document.createElement('video'); v.src = b.dataset.vid; v.controls = true; v.playsInline = true; if (b.dataset.loop) v.loop = true;
       b.parentNode.appendChild(v); b.remove(); v.play().catch(function () {});
     });
   });
