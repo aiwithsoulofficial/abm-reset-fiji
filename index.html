@@ -188,6 +188,41 @@ h1 span { display: inline-block; opacity: 0; transform: translateY(.24em); filte
 .people b { font-weight: 400; color: var(--mist); }
 .people h3 { font-size: clamp(1.9rem, 3vw, 3rem); }
 
+
+/* faculty profiles: one at a time */
+.fac .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: clamp(30px, 5vh, 56px); }
+.prof { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); background: var(--ivory); border: 1px solid rgba(96, 108, 124, .22); }
+.port { position: relative; margin: 0; background: var(--slate); min-height: clamp(380px, 70vh, 720px); overflow: hidden; }
+.port img, .port video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+.port video { object-position: 50% 50%; background: #000; }
+.port.ph { display: grid; place-items: center; text-align: center; }
+.port.ph b { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(5rem, 11vw, 10rem); line-height: 1; color: rgba(213, 204, 178, .5); }
+.port.ph span { display: block; margin-top: 14px; color: var(--sand); }
+.port .play { position: absolute; left: 20px; bottom: 20px; z-index: 2; display: flex; align-items: center; gap: 12px; padding: 12px 18px 12px 14px; background: rgba(var(--ink), .78); color: var(--ivory); border: 1px solid rgba(255, 251, 243, .4); transition: background .4s; }
+.port .play:hover { background: rgba(var(--ink), .95); }
+.port .play::before { content: ""; border-left: 11px solid var(--sand); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+.prof .txt { padding: clamp(28px, 4.4vw, 70px); display: flex; flex-direction: column; justify-content: center; }
+.prof .no { color: var(--slate); margin-bottom: 16px; }
+.prof h3 { font-size: clamp(2.4rem, 4.4vw, 4.4rem); line-height: .95; }
+.prof .title { margin-top: 12px; font-family: var(--display); font-size: clamp(1.15rem, 1.5vw, 1.45rem); line-height: 1.25; color: var(--slate); max-width: 40ch; }
+.prof .txt > p:not(.no):not(.title) { margin-top: 16px; max-width: 58ch; }
+.prof .at { margin-top: 26px; padding: 18px 20px; border-left: 2px solid var(--sand); background: rgba(96, 108, 124, .08); }
+.prof .at span { display: block; color: var(--slate); margin-bottom: 6px; }
+.prof .facts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 26px; border-top: 1px solid rgba(96, 108, 124, .28); }
+.prof .facts div { padding: 16px 12px 0 0; }
+.prof .facts div + div { padding-left: 16px; border-left: 1px solid rgba(96, 108, 124, .28); }
+.prof .facts b { display: block; font-family: var(--display); font-weight: 400; font-size: clamp(2rem, 3.4vw, 3.4rem); line-height: .9; color: var(--slate); }
+.prof .facts div > span { display: block; margin-top: 6px; font-size: 13px; line-height: 1.35; }
+/* at the table */
+.table .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: clamp(30px, 5vh, 56px); }
+.table .lede { max-width: 52ch; }
+/* the experience film */
+.cine { margin-top: clamp(44px, 7vh, 84px); }
+.cine .frame { position: relative; aspect-ratio: 16 / 9; background: #000; overflow: hidden; }
+.cine video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cine .bar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+.cine .fine { margin-top: 18px; color: var(--mist); font-size: 14px; }
+
 /* ───────── PROGRAM ───────── */
 .sessions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(30px, 5vw, 90px); margin-top: clamp(40px, 6vh, 70px); border-top: 1px solid rgba(213, 204, 178, .22); }
 .sessions li { display: grid; grid-template-columns: clamp(54px, 6vw, 92px) 1fr; gap: 4px 16px; padding: clamp(22px, 3.4vh, 34px) 0; border-bottom: 1px solid rgba(213, 204, 178, .22); }
@@ -292,7 +327,11 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   .hero .where b { display: inline; font-size: clamp(1.9rem, 8vw, 3rem); } .hero .where span { margin-top: 6px; }
   .hero .row { flex-direction: column; align-items: flex-start; gap: 18px; }
   .hero .cta { width: 100%; } .hero .cta .btn { flex: 1; text-align: center; padding: 18px 12px; }
-  .exp .grid, .brand .grid, .days .grid, .feel .top, .incl, .icon { grid-template-columns: 1fr; }
+  .exp .grid, .brand .grid, .days .grid, .feel .top, .incl, .icon, .prof { grid-template-columns: 1fr; }
+  .port { min-height: 0; aspect-ratio: 4 / 5; }
+  #facFlick { align-items: flex-start; }
+  .prof .txt { justify-content: flex-start; }
+  .fac .head, .table .head { align-items: flex-start; flex-direction: column; }
   .exp figure { order: -1; } .exp figure img { aspect-ratio: 4 / 3; } .exp figure::after { inset: 12px -10px -12px 12px; }
   .stays .head { flex-direction: column; align-items: flex-start; }
   .stay { grid-template-columns: 1fr; } .stay img { min-height: 0; aspect-ratio: 4 / 3; }
@@ -458,31 +497,100 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   <div class="orb" style="width:42vw;height:42vw;right:-14vw;top:6%" aria-hidden="true"></div>
   <div class="orb warm" style="width:40vw;height:40vw;left:-14vw;bottom:-8vw" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="kicker caps" data-r><i></i><span>The people behind your RESET</span></div>
-    <h2 data-r style="--d:.05s">Exceptional minds. One powerful experience.</h2>
-    <p class="lede" data-r style="--d:.1s">A carefully selected faculty brings real-world insight across aesthetics, leadership, profit, conversion, marketing, content and wellbeing.</p>
-
-    <div class="icon" data-r>
+    <div class="head">
       <div>
-        <p class="role caps">Industry icon</p>
-        <h3>Gay Wardle</h3>
-        <p>An ABIA Hall of Fame educator. Gay shares the principles behind lasting excellence, confident consultations and exceptional client experiences.</p>
+        <div class="kicker caps" data-r><i></i><span>The people behind your RESET</span></div>
+        <h2 data-r style="--d:.05s">Exceptional minds. One powerful experience.</h2>
+        <p class="lede" data-r style="--d:.1s">A carefully selected faculty brings real-world insight across aesthetics, leadership, profit, conversion, marketing, content and wellbeing.</p>
       </div>
-      <div class="stats">
-        <div><b><span data-count="40">40</span>+</b><span>years in skin and beauty</span></div>
-        <div><b><span data-count="3000">3,000</span>+</b><span>students educated</span></div>
-        <div><b><span data-count="200">200</span>+</b><span>talks and keynotes</span></div>
-      </div>
+      <div class="ctrl caps" data-ctrl="facFlick"><button class="prev" type="button" aria-label="Previous faculty member"></button><span>1 / 7</span><button class="next" type="button" aria-label="Next faculty member"></button></div>
     </div>
 
-    <ul class="people">
-      <li data-r><b class="caps">02</b><h3>Jade Spehr</h3><p>Financial mastery, profitability, KPIs and confident business decisions.</p></li>
-      <li data-r><b class="caps">03</b><h3>Aaron Spehr</h3><p>Conversion, sales conversations, client journeys and scalable systems.</p></li>
-      <li data-r><b class="caps">04</b><h3>Nicole Montgomery</h3><p>Aesthetic events, education and marketing expert with 20+ years of experience and 100+ events and workshops delivered. Learn industry positioning, powerful marketing and how to leverage media.</p></li>
-      <li data-r><b class="caps">05</b><h3>Alfie Lombardi</h3><p>Aesthetic business growth, leadership and commercial strategy, plus visual storytelling and guided content capture throughout RESET.</p></li>
-      <li data-r><b class="caps">06</b><h3>Jenna Samson</h3><p>Marketer and content creator with experience supporting Elizabeth Anne Walker Training &amp; Coaching and Aesthetic Business Media. Make content planning and automation genuinely manageable.</p></li>
-      <li data-r><b class="caps">07</b><h3>Jack Lombardi</h3><p>Experienced sound facilitator and musician, with a track record of leading group sound experiences. Enjoy guided breathwork, immersion and reflection.</p></li>
-    </ul>
+    <div class="flick" id="facFlick" data-r tabindex="0" aria-label="The RESET faculty, one at a time">
+      <article class="prof">
+        <figure class="port"><img src="media/fac-gay.jpg" alt="Gay Wardle, smiling, in a white embroidered shirt" loading="lazy"><button class="play caps" type="button" data-vid="media/fac-gay.mp4">Hear from Gay</button></figure>
+        <div class="txt">
+          <p class="no caps">01 / Industry icon</p>
+          <h3>Gay Wardle</h3>
+          <p class="title">Senior dermal clinician and ABIA Hall of Fame educator</p>
+          <p>Gay is one of the most respected voices in the aesthetic community, admired for her clinical expertise, her presence and her ability to connect with practitioners.</p>
+          <p>Her career has combined hands-on practice with education, mentorship and industry advocacy. Gay teaches that becoming exceptional in aesthetics goes beyond clinical skill to include emotional intelligence, client experience and purposeful leadership.</p>
+          <p>In 2025 she was a featured speaker at every Aesthetic Business Masters event, in Melbourne, Sydney and Perth.</p>
+          <div class="facts">
+            <div><b><span data-count="40">40</span>+</b><span>years in skin and beauty</span></div>
+            <div><b><span data-count="3000">3,000</span>+</b><span>students educated</span></div>
+            <div><b><span data-count="200">200</span>+</b><span>talks and keynotes</span></div>
+          </div>
+          <div class="at"><span class="caps">At RESET</span>The principles behind lasting excellence, confident consultations and exceptional client experiences.</div>
+        </div>
+      </article>
+      <article class="prof">
+        <figure class="port"><img src="media/fac-jade.jpg" alt="Jade Spehr in a sage green satin shirt, holding a folder" loading="lazy"><button class="play caps" type="button" data-vid="media/fac-jade.mp4">Hear from Jade</button></figure>
+        <div class="txt">
+          <p class="no caps">02 / Profit and numbers</p>
+          <h3>Jade Spehr</h3>
+          <p class="title">Business strategist, clinic growth coach and co-founder of JadeStart</p>
+          <p>Originally trained as a lawyer and later a Manager at PwC, Jade spent years advising multi-million and billion-dollar organisations before turning her attention to clinic owners.</p>
+          <p>She co-founded JadeStart with her partner Aaron to help clinic owners build profitable, well-structured businesses without losing their values, integrity or love for their work. Together they have supported more than 2,000 clinics globally.</p>
+          <p>Jade is known for turning complex business concepts into clear, practical strategies you can act on straight away.</p>
+          <div class="at"><span class="caps">At RESET</span>Financial mastery, profitability, KPIs and confident business decisions.</div>
+        </div>
+      </article>
+      <article class="prof">
+        <figure class="port ph"><div><b aria-hidden="true">AS</b><span class="caps">Portrait to come</span></div></figure>
+        <div class="txt">
+          <p class="no caps">03 / Conversion and systems</p>
+          <h3>Aaron Spehr</h3>
+          <p class="title">Co-founder of JadeStart</p>
+          <p>Aaron co-founded JadeStart with Jade. Together they have supported more than 2,000 clinics globally, helping owners improve profitability, strengthen leadership, lift client conversion and build high-performing teams.</p>
+          <div class="at"><span class="caps">At RESET</span>Conversion, sales conversations, client journeys and scalable systems.</div>
+        </div>
+      </article>
+      <article class="prof">
+        <figure class="port"><img src="media/fac-nicole.jpg" alt="Nicole Montgomery seated in a pale pink suit, smiling" loading="lazy"></figure>
+        <div class="txt">
+          <p class="no caps">04 / Your host</p>
+          <h3>Nicole Montgomery</h3>
+          <p class="title">Co-founder of Aesthetic Business Masters and founder of Aesthetic Coach</p>
+          <p>Nicole is an aesthetic events, education and marketing expert with 20+ years of experience and 100+ events and workshops delivered.</p>
+          <p>As the founder of Aesthetic Coach she has dedicated her career to helping clinic owners and medical professionals build successful, patient-focused businesses. Her expertise spans business strategy, social media and digital marketing.</p>
+          <p>From intimate workshops to large conferences, her events are known for bringing professionals together to connect, learn and grow.</p>
+          <div class="at"><span class="caps">At RESET</span>Industry positioning, powerful marketing and how to leverage media.</div>
+        </div>
+      </article>
+      <article class="prof">
+        <figure class="port"><img src="media/fac-alfie.jpg" alt="Alfie Lombardi seated in a pink suit and pink trainers" loading="lazy"></figure>
+        <div class="txt">
+          <p class="no caps">05 / Your host</p>
+          <h3>Alfie Lombardi</h3>
+          <p class="title">Registered Nurse, business strategist, event MC and co-founder of Aesthetic Business Masters</p>
+          <p>Alfie is a Registered Nurse and strategic leader with over 30 years of combined experience in healthcare and the aesthetic industry. He began in theatre nursing, with a Post Graduate Diploma in Operating Theatre Nursing, working alongside leading Australian specialist surgeons.</p>
+          <p>He has helped clinics grow from start-ups into multi-million-dollar practices, and brings mindset and communication skills to his work as an NLP Practitioner, Hypnosis Facilitator and Emotional Change Technique Practitioner.</p>
+          <p>In 2024 he co-founded Aesthetic Business Masters with Nicole Montgomery.</p>
+          <div class="at"><span class="caps">At RESET</span>Aesthetic business growth, leadership and commercial strategy, plus visual storytelling and guided content capture throughout RESET.</div>
+        </div>
+      </article>
+      <article class="prof">
+        <figure class="port ph"><div><b aria-hidden="true">JS</b><span class="caps">Portrait to come</span></div></figure>
+        <div class="txt">
+          <p class="no caps">06 / Content and automation</p>
+          <h3>Jenna Samson</h3>
+          <p class="title">Marketer and content creator</p>
+          <p>Jenna is a marketer and content creator with experience supporting Elizabeth Anne Walker Training &amp; Coaching and Aesthetic Business Media.</p>
+          <div class="at"><span class="caps">At RESET</span>Make content planning and automation genuinely manageable.</div>
+        </div>
+      </article>
+      <article class="prof">
+        <figure class="port ph"><div><b aria-hidden="true">JL</b><span class="caps">Portrait to come</span></div></figure>
+        <div class="txt">
+          <p class="no caps">07 / Breathwork and sound</p>
+          <h3>Jack Lombardi</h3>
+          <p class="title">Sound facilitator and musician</p>
+          <p>Jack is an experienced sound facilitator and musician, with a track record of leading group sound experiences.</p>
+          <div class="at"><span class="caps">At RESET</span>Guided breathwork, sound immersion and reflection.</div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -591,6 +699,33 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
   </div>
 </section>
 
+<!-- AT THE TABLE -->
+<section class="table" id="table">
+  <div class="orb warm" style="width:42vw;height:42vw;right:-14vw;top:-8vw" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <div class="kicker caps" data-r><i></i><span>At the table</span></div>
+        <h2 data-r style="--d:.05s">Fire, flowers and long tables.</h2>
+        <p class="lede" data-r style="--d:.1s">Three hosted dinners, three education lunches and breakfast every morning are part of your RESET.</p>
+      </div>
+      <div class="ctrl caps" data-ctrl="foodFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 7</span><button class="next" type="button" aria-label="Next photograph"></button></div>
+    </div>
+    <div class="reel" style="margin-top:0" data-r>
+      <div class="flick" id="foodFlick" tabindex="0" aria-label="Photographs of dining at the resort, one at a time">
+        <figure><img src="media/dine-fire-buffet.jpg" alt="A buffet of seafood and grilled dishes beside an open fire at dusk" loading="lazy"><figcaption class="caps">Cooked over open fire</figcaption></figure>
+        <figure><img src="media/dine-long-table.jpg" alt="A long table set with tropical flowers and glassware on a terrace, a chef at the buffet behind" loading="lazy"><figcaption class="caps">A long table, set for the evening</figcaption></figure>
+        <figure><img src="media/dine-bowls.jpg" alt="Fresh salads served in carved wooden bowls on a buffet" loading="lazy"><figcaption class="caps">Sharing bowls</figcaption></figure>
+        <figure><img src="media/dine-chef.jpg" alt="A resort chef in whites cooking at an outdoor station among red flowers" loading="lazy"><figcaption class="caps">The resort's chefs</figcaption></figure>
+        <figure><img src="media/dine-cocktails.jpg" alt="A bartender straining a cocktail into salt-rimmed glasses" loading="lazy"><figcaption class="caps">Shaken to order</figcaption></figure>
+        <figure><img src="media/dine-champagne.jpg" alt="A waiter pouring champagne into a tower of coupes on a terrace" loading="lazy"><figcaption class="caps">A champagne tower</figcaption></figure>
+        <figure><img src="media/dine-desserts.jpg" alt="A dessert table of mousse glasses, cupcakes and chocolate" loading="lazy"><figcaption class="caps">The dessert table</figcaption></figure>
+      </div>
+      <p class="fine">Resort photography, shown as a guide to dining at InterContinental Fiji.</p>
+    </div>
+  </div>
+</section>
+
 <!-- TAKE-HOME -->
 <section class="home light" id="takehome">
   <div class="orb" style="width:40vw;height:40vw;left:-14vw;top:-6vw" aria-hidden="true"></div>
@@ -643,12 +778,21 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
       </dl>
     </div>
 
+    <div class="cine" data-r>
+      <div class="bar">
+        <p class="caps" style="color:var(--sand)">Sound, stillness, food and connection</p>
+        <button class="hold" type="button" id="cineHold" aria-label="Pause film"></button>
+      </div>
+      <div class="frame"><video id="cineFilm" muted playsinline loop preload="none" poster="media/experience-poster.jpg" data-src="media/experience-film.mp4" aria-label="A silent film: a flute and drum played beside a pool pavilion, guests resting during a sound session, spa treatments, dishes cooked over fire, a long table, and a circle of people floating in a pool at sunrise"></video></div>
+      <p class="fine">Sound session footage from an earlier retreat, shown to give a feel for the experience. Spa and dining photography courtesy of InterContinental Fiji.</p>
+    </div>
+
     <div class="reel" data-r>
       <div class="bar">
         <p class="caps" style="color:var(--sand)">The resort, in your own time</p>
-        <div class="ctrl caps" data-ctrl="reelFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 11</span><button class="next" type="button" aria-label="Next photograph"></button></div>
+        <div class="ctrl caps" data-ctrl="reelFlick"><button class="prev" type="button" aria-label="Previous photograph"></button><span>1 / 18</span><button class="next" type="button" aria-label="Next photograph"></button></div>
       </div>
-      <div class="flick" id="reelFlick" tabindex="0" aria-label="Photographs of the resort, one at a time">
+      <div class="flick" id="reelFlick" tabindex="0" aria-label="Photographs of the resort and its people, one at a time">
         <figure><img src="media/spa-pool-back.jpg" alt="A guest resting in the spa's vitality pool, facing the rainforest garden" loading="lazy"><figcaption class="caps">The spa garden</figcaption></figure>
         <figure><img src="media/infinity-pool.jpg" alt="The hilltop infinity pool looking over the resort rooftops to the ocean" loading="lazy"><figcaption class="caps">The hilltop infinity pool</figcaption></figure>
         <figure><img src="media/sandbar-boat.jpg" alt="A boat pulled up on the sandbar in the lagoon, jet skis passing behind" loading="lazy"><figcaption class="caps">The sandbar</figcaption></figure>
@@ -660,6 +804,13 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
         <figure><img src="media/steam.jpg" alt="Two guests laughing in the spa steam room" loading="lazy"><figcaption class="caps">The steam room</figcaption></figure>
         <figure><img src="media/massage-close.jpg" alt="A guest with frangipani in her hair, smiling during a massage" loading="lazy"><figcaption class="caps">Time to exhale</figcaption></figure>
         <figure><img src="media/spa-pool-front.jpg" alt="A guest walking through the vitality pool beside a stone wall and palms" loading="lazy"><figcaption class="caps">Moments of stillness</figcaption></figure>
+        <figure><img src="media/culture-torch-walk.jpg" alt="Two Fijian torch bearers in traditional dress walking the lagoon shore at dusk" loading="lazy"><figcaption class="caps">The evening torch lighting</figcaption></figure>
+        <figure><img src="media/culture-fire-dance.jpg" alt="Fire dancers spinning rings of flame on the beach at night" loading="lazy"><figcaption class="caps">Fire on the beach</figcaption></figure>
+        <figure><img src="media/culture-warriors.jpg" alt="Two Fijian men in traditional dress laughing together, one holding a lit torch, the resort behind" loading="lazy"><figcaption class="caps">A Fijian welcome</figcaption></figure>
+        <figure><img src="media/spa-garden-shower.jpg" alt="A guest at the spa's outdoor garden shower among palms" loading="lazy"><figcaption class="caps">The spa garden shower</figcaption></figure>
+        <figure><img src="media/spa-sauna-tall.jpg" alt="A guest resting in a warmly lit sauna framed by tropical leaves" loading="lazy"><figcaption class="caps">The sauna</figcaption></figure>
+        <figure><img src="media/pool-service.jpg" alt="A waiter handing a cocktail to a guest on a sun lounger by the pool" loading="lazy"><figcaption class="caps">Poolside</figcaption></figure>
+        <figure><img src="media/beach-selfie.jpg" alt="Two guests taking a photograph with a member of the resort team on the beach" loading="lazy"><figcaption class="caps">The people you meet</figcaption></figure>
       </div>
       <p class="fine">Resort spa treatments and optional activities are booked separately.</p>
     </div>
@@ -786,6 +937,32 @@ footer .fine { margin-top: 30px; display: flex; justify-content: space-between; 
     es.forEach(function (e) { if (!e.isIntersecting) return; e.target.classList.add('in'); e.target.querySelectorAll('[data-count]').forEach(count); io.unobserve(e.target); });
   }, { threshold: .14, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('[data-r]').forEach(function (el) { io.observe(el); });
+
+  /* faculty clips: the portrait becomes the film, with sound, when asked */
+  document.querySelectorAll('.port .play').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = document.createElement('video'); v.src = b.dataset.vid; v.controls = true; v.playsInline = true;
+      b.parentNode.appendChild(v); b.remove(); v.play().catch(function () {});
+    });
+  });
+  document.querySelectorAll('#facFlick').forEach(function (f) {
+    f.addEventListener('scroll', function () { f.querySelectorAll('video').forEach(function (v) { var r = v.getBoundingClientRect(), fr = f.getBoundingClientRect(); if (r.right < fr.left + 40 || r.left > fr.right - 40) v.pause(); }); }, { passive: true });
+  });
+
+  /* the experience film: loads when near, plays in view, pauses on request */
+  var cine = document.getElementById('cineFilm'), cineHold = document.getElementById('cineHold'), cinePaused = still;
+  function setCine() { cineHold.classList.toggle('paused', cine.paused); cineHold.setAttribute('aria-label', cine.paused ? 'Play film' : 'Pause film'); }
+  cine.addEventListener('play', setCine); cine.addEventListener('pause', setCine);
+  cineHold.addEventListener('click', function () {
+    if (!cine.src) cine.src = cine.dataset.src;
+    if (cine.paused) { cinePaused = false; cine.play().catch(function () {}); } else { cinePaused = true; cine.pause(); }
+  });
+  setCine();
+  new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) { if (!cinePaused) { if (!cine.src) cine.src = cine.dataset.src; cine.play().catch(function () {}); } } else cine.pause();
+    });
+  }, { threshold: .25 }).observe(cine);
 
   /* flick carousels: one at a time, by swipe, arrow buttons or arrow keys */
   document.querySelectorAll('[data-ctrl]').forEach(function (c) {
